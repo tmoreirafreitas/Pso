@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - API", "0 - API", "{0072303C-1B12-4DD8-9CF1-61788242FE4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Commands", "1 - Commands", "{09BAB586-663F-4B91-9777-1A5EDA470F9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Queries", "2 - Queries", "{0786548E-BC3C-4618-831C-73A4E1075565}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{75105D4D-A8DB-42C0-B9C9-8800FD3AF919}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{565C63BB-97E5-46AA-ABD1-39F3D17E0634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSO.BackEnd.Domain", "PSO.BackEnd.Domain\PSO.BackEnd.Domain.csproj", "{03F90899-003C-4C37-9F21-1D7742AD73F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03F90899-003C-4C37-9F21-1D7742AD73F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F90899-003C-4C37-9F21-1D7742AD73F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F90899-003C-4C37-9F21-1D7742AD73F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F90899-003C-4C37-9F21-1D7742AD73F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03F90899-003C-4C37-9F21-1D7742AD73F7} = {75105D4D-A8DB-42C0-B9C9-8800FD3AF919}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3108E1F-A993-4519-8ED4-D7BDE71FA81B}
+	EndGlobalSection
+EndGlobal
