@@ -7,20 +7,21 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Oculos : Entity
     {
-        public IEnumerable<Lente> Lentes { get; private set; }
+        public long OculosId { get; private set; }
+        public ICollection<Lente> Lentes { get; private set; }
         public string Cor { get; private set; }
         public float DP { get; private set; }
         public float ALT { get; private set; }
-        public Pedido Pedido { get; private set; }
+        public long PedidoOculosId { get; private set; }
+        //public ICollection<Pedido> Pedidos { get; private set; }
+        public ICollection<PedidoOculos> PedidosOculos { get; private set; }
         public float Adicao
         {
             get
             {
-                float adicao = 0;
-
                 if (Lentes != null && Lentes.Count() == 2)
                 {
-                    adicao = Lentes.ElementAt(0).Grau + Lentes.ElementAt(1).Grau;
+                    float adicao = Lentes.ElementAt(0).Grau + Lentes.ElementAt(1).Grau;
                     return adicao;
                 }
                 else
@@ -31,12 +32,13 @@ namespace PSO.BackEnd.Domain.Entities
             private set { }
         }
 
-        public Oculos(string cor, float dP, float aLT, Pedido pedido)
+        public Oculos(long? oculosId, string cor, float dP, float aLT)
         {
+            OculosId = oculosId ?? 0;
             Cor = cor;
             DP = dP;
             ALT = aLT;
-            Pedido = pedido;
+            PedidosOculos = new List<PedidoOculos>();
             Lentes = new List<Lente>(2);
             Validate(this, new OculosValidator());
         }
