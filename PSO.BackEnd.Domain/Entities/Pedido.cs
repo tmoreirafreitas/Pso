@@ -6,18 +6,20 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Pedido : Entity
     {
+        public long PedidoId { get; set; }
         public string Servico { get; private set; }
         public string Obs { get; private set; }
         public string Medico { get; private set; }
         public DateTime DataEntrega { get; private set; }
         public DateTime DataSolicitacao { get; private set; }
-        public Cliente Cliente { get; set; }
+        public long ClienteId { get; private set; }
+        public Cliente Cliente { get; private set; }
         //public virtual ApplicationUser ApplicationUser { get; set; }
-        public IEnumerable<Oculos> Oculos { get; private set; }
-        public Fatura Fatura { get; set; }
+        public ICollection<PedidoOculos> PedidosOculos { get; private set; }
+        public Fatura Fatura { get; private set; }
         public decimal Preco { get; private set; }
 
-        public Pedido(string servico, string medico, decimal preco, DateTime dataEntrega, DateTime dataSolicitacao,
+        public Pedido(string servico, string medico, decimal preco, DateTime dataEntrega, DateTime dataSolicitacao, long clienteId,
             Cliente cliente, Fatura fatura, string obs)
         {
             Servico = servico;
@@ -25,10 +27,11 @@ namespace PSO.BackEnd.Domain.Entities
             Medico = medico;
             DataEntrega = dataEntrega;
             DataSolicitacao = dataSolicitacao;
+            ClienteId = clienteId;
             Cliente = cliente;
-            Oculos = new List<Oculos>();
+            PedidosOculos = new List<PedidoOculos>();
             Fatura = fatura;
-            Preco = preco;
+            Preco = preco;            
             Validate(this, new PedidoValidator());
         }
     }
