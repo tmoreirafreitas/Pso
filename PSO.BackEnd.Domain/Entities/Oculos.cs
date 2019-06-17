@@ -7,7 +7,6 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Oculos : Entity
     {
-        public long OculosId { get; private set; }
         public ICollection<Lente> Lentes { get; private set; }
         public string Cor { get; private set; }
         public float DP { get; private set; }
@@ -34,7 +33,7 @@ namespace PSO.BackEnd.Domain.Entities
 
         public Oculos(long? oculosId, string cor, float dP, float aLT)
         {
-            OculosId = oculosId ?? 0;
+            Id = oculosId ?? 0;
             Cor = cor;
             DP = dP;
             ALT = aLT;

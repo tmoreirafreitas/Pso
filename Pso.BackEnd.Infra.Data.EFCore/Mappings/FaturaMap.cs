@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(fat => fat.FaturaId).HasName("PK_Fatura");
+            builder.HasKey(fat => fat.Id).HasName("PK_Fatura");
+            builder.Property(fat => fat.Id).HasColumnName("FaturaId");
             builder.Property(fat => fat.DataPagamento)
                 .HasColumnType("date")
                 .IsRequired();
@@ -43,7 +44,7 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.HasMany(f => f.Parcelas)
                 .WithOne(p => p.Fatura)
                 .HasForeignKey(p => p.FaturaId)
-                .HasPrincipalKey(p => p.FaturaId)
+                .HasPrincipalKey(p => p.Id)
                 .HasConstraintName("FK_Fatura_Parcela")
                 .IsRequired();
         }

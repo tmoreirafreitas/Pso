@@ -10,9 +10,9 @@
 
         public PedidoOculos(Pedido pedido, Oculos oculos)
         {
-            PedidoId = pedido != null ? pedido.PedidoId : 0;
+            PedidoId = pedido != null ? pedido.Id : 0;
             Pedido = pedido;
-            OculosId = oculos != null ? oculos.OculosId : 0;
+            OculosId = oculos != null ? oculos.Id : 0;
             Oculos = oculos;
         }
     }

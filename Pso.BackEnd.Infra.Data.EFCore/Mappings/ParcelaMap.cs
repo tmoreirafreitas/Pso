@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(p => p.ParcelaId).HasName("PK_Parcela");
+            builder.HasKey(p => p.Id).HasName("PK_Parcela");
+            builder.Property(p => p.Id).HasColumnName("ParcelaId");
             builder.Property(p => p.DataPagamento)
                 .HasColumnType("date")
                 .IsRequired();

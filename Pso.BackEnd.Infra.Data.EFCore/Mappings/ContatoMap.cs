@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(c => c.Valid);
             builder.Ignore(c => c.ValidationResult);
             builder.Ignore(c => c.Invalid);
-            builder.HasKey(c => c.ContatoId).HasName("PK_Contato");
+            builder.HasKey(c => c.Id).HasName("PK_Contato");
+            builder.Property(c => c.Id).HasColumnName("ContatoId");
             builder.Property(c => c.Email)
                 .HasColumnType("varchar(40)")
                 .HasMaxLength(40)

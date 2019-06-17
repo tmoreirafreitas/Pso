@@ -3,7 +3,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace PSO.BackEnd.Domain.Interfaces.Repositories.Relational
+namespace PSO.BackEnd.Domain.Interfaces.Repositories.Relational.Write
 {
     public interface IWriteRelationalRepository<TEntity> where TEntity : Entity
     {

@@ -6,7 +6,6 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Endereco : Entity
     {
-        public long EnderecoId { get; set; }
         public string Cep { get; private set; }
         public string Logradouro { get; private set; }
         public string Bairro { get; private set; }
@@ -27,7 +26,7 @@ namespace PSO.BackEnd.Domain.Entities
             Complemento = complemento;
             Cep = cep;
             Cliente = cliente;
-            ClienteId = cliente != null ? cliente.ClienteId : 0;
+            ClienteId = cliente != null ? cliente.Id : 0;
             Validate(this, new EnderecoValidator());
         }
     }
