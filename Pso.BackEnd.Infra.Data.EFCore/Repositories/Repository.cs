@@ -11,8 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
 {
     public class Repository<TEntity> : IWriteRelationalRepository<TEntity>, IReadRelationalRepository<TEntity> where TEntity : Entity
     {
-        private readonly DbContext _context;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly DbContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public Repository(DbContext context)
         {
