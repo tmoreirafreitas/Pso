@@ -11,8 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(o => o.OculosId).HasName("PK_Oculos");
-            builder.Property(o => o.OculosId);
+            builder.HasKey(o => o.Id).HasName("PK_Oculos");
+            builder.Property(o => o.Id).HasColumnName("OculosId");
             builder.Property(o => o.Adicao)
                 .HasColumnType("float");
 
@@ -28,7 +28,7 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.HasMany(o => o.Lentes)
                 .WithOne(l => l.Oculos)
                 .HasForeignKey(l => l.OculosId)
-                .HasPrincipalKey(o => o.OculosId)
+                .HasPrincipalKey(o => o.Id)
                 .IsRequired();
         }
     }

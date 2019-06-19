@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(e=>e.EnderecoId).HasName("PK_Endereco");
+            builder.HasKey(e=>e.Id).HasName("PK_Endereco");
+            builder.Property(e => e.Id).HasColumnName("EnderecoId");
 
             builder.Property(e => e.Bairro)
                 .HasColumnType("varchar(60)")

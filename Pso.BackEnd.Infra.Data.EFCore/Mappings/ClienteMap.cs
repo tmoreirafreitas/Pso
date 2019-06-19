@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(c => c.ClienteId).HasName("PK_Cliente");
+            builder.HasKey(c => c.Id).HasName("PK_Cliente");
+            builder.Property(c => c.Id).HasColumnName("ClienteId");
             builder.Property(c => c.Cpf)
                 .HasColumnType("varchar(11)")
                 .HasMaxLength(15)
@@ -53,14 +54,14 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.HasMany(c => c.Pedidos)
                 .WithOne(p => p.Cliente)
                 .HasForeignKey(p => p.ClienteId)
-                .HasPrincipalKey(p => p.ClienteId)
+                .HasPrincipalKey(p => p.Id)
                 .HasConstraintName("FK_Cliente_Pedido")
                 .IsRequired();
 
             builder.HasMany(c => c.Contatos)
-                .WithOne(p => p.Cliente)
-                .HasForeignKey(p => p.ClienteId)
-                .HasPrincipalKey(p => p.ClienteId)
+                .WithOne(c => c.Cliente)
+                .HasForeignKey(c => c.ClienteId)
+                .HasPrincipalKey(c => c.Id)
                 .HasConstraintName("FK_Cliente_Contato")
                 .IsRequired();
         }

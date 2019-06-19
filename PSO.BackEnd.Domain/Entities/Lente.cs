@@ -5,7 +5,6 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Lente : Entity
     {
-        public int LenteId { get; private set; }
         public float Grau { get; private set; }
         public float Cyl { get; private set; }
         public byte Eixo { get; private set; }
@@ -19,7 +18,7 @@ namespace PSO.BackEnd.Domain.Entities
             Cyl = cyl;
             Eixo = eixo;
             LenteType = lenteType;
-            OculosId = oculos != null ? oculos.OculosId : 0;
+            OculosId = oculos != null ? oculos.Id : 0;
             Oculos = oculos;
             Validate(this, new LenteValidator());
         }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace PSO.BackEnd.Domain.Interfaces.Repositories.Relational
+namespace PSO.BackEnd.Domain.Interfaces.Repositories.Relational.Read
 {
-    interface IReadRelationalRepository<TEntity> where TEntity : Entity
+    public interface IReadRelationalRepository<TEntity> where TEntity : Entity
     {
         Task<IQueryable<TEntity>> GetAllAsync();
         Task<IQueryable<TEntity>> GetAllAsync(int page, int pageSize);

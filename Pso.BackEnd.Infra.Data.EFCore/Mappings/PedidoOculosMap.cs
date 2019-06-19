@@ -11,7 +11,7 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(po => po.Valid);
             builder.Ignore(po => po.ValidationResult);
             builder.Ignore(po => po.Invalid);
-            builder.HasKey(po => new { po.PedidoId, po.OculosId });
+            builder.HasKey(po => new { po.PedidoId, po.OculosId }).HasName("PK_Pedido_Oculos");
             builder.HasOne(po => po.Pedido)
                 .WithMany(po => po.PedidosOculos)
                 .HasForeignKey(po => po.PedidoId).HasConstraintName("FK_Pedido");

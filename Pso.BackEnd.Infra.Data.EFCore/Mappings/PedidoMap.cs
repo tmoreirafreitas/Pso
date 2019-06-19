@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(p => p.PedidoId).HasName("PedidoIdPk");            
+            builder.HasKey(p => p.Id).HasName("PedidoIdPk");
+            builder.Property(p => p.Id).HasColumnName("PedidoId");
             builder.Property(p => p.DataSolicitacao)
                 .HasColumnType("date")
                 .IsRequired();

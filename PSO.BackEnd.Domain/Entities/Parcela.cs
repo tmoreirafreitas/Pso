@@ -5,7 +5,6 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Parcela : Entity
     {
-        public long ParcelaId { get; set; }
         public int Numero { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime DataVencimento { get; private set; }
@@ -21,7 +20,7 @@ namespace PSO.BackEnd.Domain.Entities
             DataPagamento = dataPagamento;
             Recebido = recebido;
             Fatura = fatura;
-            FaturaId = fatura.FaturaId;
+            FaturaId = fatura.Id;
             Validate(this, new ParcelaValidator());
         }
     }

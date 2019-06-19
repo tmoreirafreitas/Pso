@@ -11,7 +11,8 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.ValidationResult);
             builder.Ignore(e => e.Invalid);
-            builder.HasKey(l => l.LenteId).HasName("PK_Lente");
+            builder.HasKey(l => l.Id).HasName("PK_Lente");
+            builder.Property(l => l.Id).HasColumnName("LenteId");
             builder.Property(l => l.Cyl)
                 .HasColumnType("float");
 

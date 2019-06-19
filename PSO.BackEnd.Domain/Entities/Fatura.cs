@@ -7,7 +7,6 @@ namespace PSO.BackEnd.Domain.Entities
 {
     public class Fatura : Entity
     {
-        public long FaturaId { get; set; }
         public decimal Valor { get; private set; }
         public decimal Total { get; private set; }
         public decimal Sinal { get; private set; }
@@ -20,7 +19,7 @@ namespace PSO.BackEnd.Domain.Entities
         public ICollection<Parcela> Parcelas { get; private set; }
 
         public Fatura(decimal valor, decimal total, decimal sinal, bool isPaga, 
-            DateTime dataPagamento, int numeroParcelas, FormaPagamento formaPagamento, Pedido pedido, Cliente cliente)
+            DateTime dataPagamento, int numeroParcelas, FormaPagamento formaPagamento, Pedido pedido)
         {
             Valor = valor;
             Total = total;
@@ -29,7 +28,7 @@ namespace PSO.BackEnd.Domain.Entities
             DataPagamento = dataPagamento;
             NumeroParcelas = numeroParcelas;
             FormaPagamento = formaPagamento;
-            PedidoId = pedido != null ? pedido.PedidoId : 0;
+            PedidoId = pedido != null ? pedido.Id : 0;
             Pedido = pedido;
             Parcelas = new List<Parcela>();
             Validate(this, new FaturaValidator());
