@@ -15,9 +15,8 @@ namespace PSO.BackEnd.Domain.Entities
         public string Email { get; private set; }
         public DateTime Nascimento { get; private set; }
         public Endereco Endereco { get; private set; }
-        public IEnumerable<Telefone> Telefones { get; private set; }
-        public IEnumerable<Pedido> Pedidos { get; private set; }
-        public IEnumerable<Fatura> Faturas { get; private set; }
+        public ICollection<Contato> Contatos { get; private set; }
+        public ICollection<Pedido> Pedidos { get; private set; }
         public SexoType Sexo { get; private set; }
 
         public Cliente(string nome, string rg, string cpf, string filiacao, bool? isSPC, string email, DateTime nascimento, Endereco endereco, SexoType sexo)
@@ -30,9 +29,8 @@ namespace PSO.BackEnd.Domain.Entities
             Email = email;
             Nascimento = nascimento;
             Endereco = endereco;
-            Telefones = new List<Telefone>();
+            Contatos = new List<Contato>();
             Pedidos = new List<Pedido>();
-            Faturas = new List<Fatura>();
             Sexo = sexo;
             Validate(this, new ClienteValidator());
         }

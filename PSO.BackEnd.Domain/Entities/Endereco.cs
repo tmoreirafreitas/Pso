@@ -12,10 +12,11 @@ namespace PSO.BackEnd.Domain.Entities
         public string Cidade { get; private set; }
         public string Estado { get; private set; }
         public int? Numero { get; private set; }
-        public string Complemento { get; private set; }        
-        public IEnumerable<Cliente> Clientes { get; set; }
+        public string Complemento { get; private set; }
+        public long ClienteId { get; private set; }
+        public Cliente Cliente { get; private set; }
 
-        public Endereco(string logradouro, string bairro, string cidade, string estado, int? numero, string cep, string complemento)
+    public Endereco(string logradouro, string bairro, string cidade, string estado, int? numero, string cep, string complemento, Cliente cliente)
         {
             Logradouro = logradouro;
             Bairro = bairro;
@@ -24,7 +25,8 @@ namespace PSO.BackEnd.Domain.Entities
             Numero = numero;
             Complemento = complemento;
             Cep = cep;
-            Clientes = new List<Cliente>();
+            Cliente = cliente;
+            ClienteId = cliente != null ? cliente.Id : 0;
             Validate(this, new EnderecoValidator());
         }
     }

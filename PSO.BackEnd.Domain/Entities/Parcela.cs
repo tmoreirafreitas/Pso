@@ -1,7 +1,5 @@
 ﻿using PSO.BackEnd.Domain.Validators;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PSO.BackEnd.Domain.Entities
 {
@@ -12,6 +10,7 @@ namespace PSO.BackEnd.Domain.Entities
         public DateTime DataVencimento { get; private set; }
         public DateTime DataPagamento { get; private set; }
         public bool Recebido { get; private set; }
+        public long FaturaId { get; private set; }
         public Fatura Fatura { get; set; }
         public Parcela(int numero, decimal valor, DateTime dataVencimento, DateTime dataPagamento, bool recebido, Fatura fatura)
         {
@@ -21,6 +20,7 @@ namespace PSO.BackEnd.Domain.Entities
             DataPagamento = dataPagamento;
             Recebido = recebido;
             Fatura = fatura;
+            FaturaId = fatura.Id;
             Validate(this, new ParcelaValidator());
         }
     }

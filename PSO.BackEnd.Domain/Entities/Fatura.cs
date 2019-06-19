@@ -14,12 +14,12 @@ namespace PSO.BackEnd.Domain.Entities
         public DateTime DataPagamento { get; private set; }
         public int NumeroParcelas { get; private set; }
         public FormaPagamento FormaPagamento { get; private set; }
+        public long PedidoId { get; private set; }
         public Pedido Pedido { get; private set; }
-        public Cliente Cliente { get; private set; }
-        public IEnumerable<Parcela> Parcelas { get; private set; }
+        public ICollection<Parcela> Parcelas { get; private set; }
 
         public Fatura(decimal valor, decimal total, decimal sinal, bool isPaga, 
-            DateTime dataPagamento, int numeroParcelas, FormaPagamento formaPagamento, Pedido pedido, Cliente cliente)
+            DateTime dataPagamento, int numeroParcelas, FormaPagamento formaPagamento, Pedido pedido)
         {
             Valor = valor;
             Total = total;
@@ -28,8 +28,8 @@ namespace PSO.BackEnd.Domain.Entities
             DataPagamento = dataPagamento;
             NumeroParcelas = numeroParcelas;
             FormaPagamento = formaPagamento;
+            PedidoId = pedido != null ? pedido.Id : 0;
             Pedido = pedido;
-            Cliente = cliente;
             Parcelas = new List<Parcela>();
             Validate(this, new FaturaValidator());
         }
