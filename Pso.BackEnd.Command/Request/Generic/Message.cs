@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pso.BackEnd.Command.Request
+namespace Pso.BackEnd.Command.Request.Generic
 {
     public class Message
     {

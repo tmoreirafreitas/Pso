@@ -1,9 +1,6 @@
 ﻿using PSO.BackEnd.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pso.BackEnd.Command.Request
+namespace Pso.BackEnd.Command.Request.Generic
 {
     public class Command<T> : Message where T : Entity
     {

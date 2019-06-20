@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Pso.BackEnd.Command.Request;
+using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Relational.Write;
 using PSO.BackEnd.Domain.Interfaces.Repositories.UnitOfWork;

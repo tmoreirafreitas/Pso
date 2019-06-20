@@ -1,6 +1,7 @@
-﻿using PSO.BackEnd.Domain.Entities;
+﻿using Pso.BackEnd.Command.Request.Generic;
+using PSO.BackEnd.Domain.Entities;
 
-namespace Pso.BackEnd.Command.Request
+namespace Pso.BackEnd.Command.Request.RequestCliente
 {
     public class UpdateClienteCommand : UpdateCommand<Cliente>
     {

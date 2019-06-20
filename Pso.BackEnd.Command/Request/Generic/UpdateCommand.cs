@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using PSO.BackEnd.Domain.Entities;
 
-namespace Pso.BackEnd.Command.Request
+namespace Pso.BackEnd.Command.Request.Generic
 {
     public class UpdateCommand<T> : Command<T>, IRequest<bool> where T : Entity
     {
