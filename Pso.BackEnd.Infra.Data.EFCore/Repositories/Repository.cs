@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PSO.BackEnd.Domain.Entities;
-using PSO.BackEnd.Domain.Interfaces.Repositories.Relational.Read;
-using PSO.BackEnd.Domain.Interfaces.Repositories.Relational.Write;
+using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Read;
+using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
 {
-    public class Repository<TEntity> : IWriteRelationalRepository<TEntity>, IReadRelationalRepository<TEntity> where TEntity : Entity
+    public class Repository<TEntity> : IWriteEfRepository<TEntity>, IReadEfRepository<TEntity> where TEntity : Entity
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
