@@ -9,12 +9,12 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Context
     {
         public PsoDbContext()
         {
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         public PsoDbContext(DbContextOptions<PsoDbContext> options) : base(options)
         {
-            //Database.EnsureCreated();   // Create the database
+            Database.EnsureCreated();   // Create the database
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
