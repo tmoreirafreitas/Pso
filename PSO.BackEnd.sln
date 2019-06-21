@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pso.BackEnd.Command", "Pso.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pso.BackEnd.Infra.CrossCutting.IoC", "Pso.BackEnd.Infra.CrossCutting.IoC\Pso.BackEnd.Infra.CrossCutting.IoC.csproj", "{152EC79E-DF38-4C97-9D60-6529D54324ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pso.BackEnd.WebApi", "Pso.BackEnd.WebApi\Pso.BackEnd.WebApi.csproj", "{7446753B-27D0-4505-B180-946EF3E347AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{152EC79E-DF38-4C97-9D60-6529D54324ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{152EC79E-DF38-4C97-9D60-6529D54324ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{152EC79E-DF38-4C97-9D60-6529D54324ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7446753B-27D0-4505-B180-946EF3E347AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7446753B-27D0-4505-B180-946EF3E347AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7446753B-27D0-4505-B180-946EF3E347AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7446753B-27D0-4505-B180-946EF3E347AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{4E1C35BF-4F50-4399-BAAC-B877E0C78C7E} = {D0DB6170-D4B6-4482-980B-08366141C878}
 		{C232692F-C473-41A0-BFE9-E69376D5D9B9} = {09BAB586-663F-4B91-9777-1A5EDA470F9F}
 		{152EC79E-DF38-4C97-9D60-6529D54324ED} = {31C0190E-2E08-475D-9AE3-045747C444B8}
+		{7446753B-27D0-4505-B180-946EF3E347AC} = {0072303C-1B12-4DD8-9CF1-61788242FE4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3108E1F-A993-4519-8ED4-D7BDE71FA81B}

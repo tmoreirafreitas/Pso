@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Pso.BackEnd.Command.Handles.HandlerCliente;
+using Pso.BackEnd.Command.Handles.HandlerContato;
 using Pso.BackEnd.Command.Handles.HandlerEndereco;
 using Pso.BackEnd.Command.Request.RequestCliente;
+using Pso.BackEnd.Command.Request.RequestContato;
 using Pso.BackEnd.Command.Request.RequestEndereco;
+using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.EFCore.Repositories;
 using Pso.BackEnd.Infra.Data.EFCore.UnitOfWork;
@@ -35,6 +38,11 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<UpdateEnderecoCommand, bool>, UpdateEnderecoCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteEnderecoCommand, bool>, DeleteEnderecoCommandHandler>();
 
+            //Contato Request
+            services.AddScoped<IRequestHandler<CreateContatoCommand, bool>, CreateContatoCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateContatoCommand, bool>, UpdateContatoCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteContatoCommand, bool>, DeleteContatoCommandHandler>();
+
             // Infra-Data UnitOfWork dependency
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -61,6 +69,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IPedidoOculosReadEfRepository, PedidoOculosEfRepository>();
 
             //Instance Context            
+            services.AddScoped<NotificationContext>();
             services.AddScoped<DbContext, PsoDbContext>();
             services.AddScoped<PsoDbContext>();
         }

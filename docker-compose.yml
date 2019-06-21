@@ -1,0 +1,22 @@
+version: '3.4'
+
+networks:
+  pcdev:
+    external:
+      name: pcdev
+
+services:
+  pso.backend.webapi:
+    image: ${DOCKER_REGISTRY-}psobackendwebapi    
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: psobackendwebapi
+    ports:
+      - "80:8080"
+    environment:
+      DefaultConnection: ${DEFAULT_CONNECTION}
+    command: ifconfig
+    networks:
+      pcdev:
+        ipv4_address: 172.18.0.10
