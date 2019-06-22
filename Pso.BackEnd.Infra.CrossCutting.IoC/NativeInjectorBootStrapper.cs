@@ -5,9 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Pso.BackEnd.Command.Handles.HandlerCliente;
 using Pso.BackEnd.Command.Handles.HandlerContato;
 using Pso.BackEnd.Command.Handles.HandlerEndereco;
+using Pso.BackEnd.Command.Handles.HandlerFatura;
 using Pso.BackEnd.Command.Request.RequestCliente;
 using Pso.BackEnd.Command.Request.RequestContato;
 using Pso.BackEnd.Command.Request.RequestEndereco;
+using Pso.BackEnd.Command.Request.RequestFatura;
 using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.EFCore.Repositories;
@@ -42,6 +44,11 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<CreateContatoCommand, bool>, CreateContatoCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateContatoCommand, bool>, UpdateContatoCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteContatoCommand, bool>, DeleteContatoCommandHandler>();
+
+            //Contato Fatura
+            services.AddScoped<IRequestHandler<CreateFaturaCommand, bool>, CreateFaturaCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateFaturaCommand, bool>, UpdateFaturaCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteFaturaCommand, bool>, DeleteFaturaCommandHandler>();
 
             // Infra-Data UnitOfWork dependency
             services.AddScoped<IUnitOfWork, UnitOfWork>();
