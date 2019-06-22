@@ -6,10 +6,12 @@ using Pso.BackEnd.Command.Handles.HandlerCliente;
 using Pso.BackEnd.Command.Handles.HandlerContato;
 using Pso.BackEnd.Command.Handles.HandlerEndereco;
 using Pso.BackEnd.Command.Handles.HandlerFatura;
+using Pso.BackEnd.Command.Handles.HandlerLente;
 using Pso.BackEnd.Command.Request.RequestCliente;
 using Pso.BackEnd.Command.Request.RequestContato;
 using Pso.BackEnd.Command.Request.RequestEndereco;
 using Pso.BackEnd.Command.Request.RequestFatura;
+using Pso.BackEnd.Command.Request.RequestLente;
 using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.EFCore.Repositories;
@@ -49,6 +51,11 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<CreateFaturaCommand, bool>, CreateFaturaCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateFaturaCommand, bool>, UpdateFaturaCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteFaturaCommand, bool>, DeleteFaturaCommandHandler>();
+
+            //Contato Lente
+            services.AddScoped<IRequestHandler<CreateLenteCommand, bool>, CreateLenteCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateLenteCommand, bool>, UpdateLenteCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteLenteCommand, bool>, DeleteLenteCommandHandler>();
 
             // Infra-Data UnitOfWork dependency
             services.AddScoped<IUnitOfWork, UnitOfWork>();
