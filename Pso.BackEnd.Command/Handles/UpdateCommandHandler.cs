@@ -11,13 +11,14 @@ namespace Pso.BackEnd.Command.Handles
 {
     public class UpdateCommandHandler<T> : IRequestHandler<UpdateCommand<T>, bool> where T : Entity
     {
-        private readonly IWriteEfRepository<T> _repository;
-        private readonly IUnitOfWork _uow;
-
-        public UpdateCommandHandler(IWriteEfRepository<T> repository, IUnitOfWork uow)
+        protected readonly IWriteEfRepository<T> _repository;
+        protected readonly IUnitOfWork _uow;
+        protected readonly IMediator _mediator;
+        public UpdateCommandHandler(IWriteEfRepository<T> repository, IUnitOfWork uow, IMediator mediator)
         {
             _repository = repository;
             _uow = uow;
+            _mediator = mediator;
         }
 
         public async Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)

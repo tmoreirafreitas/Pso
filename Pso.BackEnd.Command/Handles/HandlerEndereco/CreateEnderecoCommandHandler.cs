@@ -1,4 +1,5 @@
-﻿using PSO.BackEnd.Domain.Entities;
+﻿using MediatR;
+using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
 using PSO.BackEnd.Domain.Interfaces.Repositories.UnitOfWork;
 using System;
@@ -9,7 +10,7 @@ namespace Pso.BackEnd.Command.Handles.HandlerEndereco
 {
     public class CreateEnderecoCommandHandler : CreateCommandHandler<Endereco>
     {
-        public CreateEnderecoCommandHandler(IEnderecoWriteEfRepository repository, IUnitOfWork uow) : base(repository, uow)
+        public CreateEnderecoCommandHandler(IEnderecoWriteEfRepository repository, IUnitOfWork uow, IMediator mediator) : base(repository, uow, mediator)
         {
         }
     }

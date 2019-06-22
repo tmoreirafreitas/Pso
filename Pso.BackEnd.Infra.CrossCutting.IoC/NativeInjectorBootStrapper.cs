@@ -7,11 +7,19 @@ using Pso.BackEnd.Command.Handles.HandlerContato;
 using Pso.BackEnd.Command.Handles.HandlerEndereco;
 using Pso.BackEnd.Command.Handles.HandlerFatura;
 using Pso.BackEnd.Command.Handles.HandlerLente;
+using Pso.BackEnd.Command.Handles.HandlerOculos;
+using Pso.BackEnd.Command.Handles.HandlerParcela;
+using Pso.BackEnd.Command.Handles.HandlerPedido;
+using Pso.BackEnd.Command.Handles.HandlerPedidoOculos;
 using Pso.BackEnd.Command.Request.RequestCliente;
 using Pso.BackEnd.Command.Request.RequestContato;
 using Pso.BackEnd.Command.Request.RequestEndereco;
 using Pso.BackEnd.Command.Request.RequestFatura;
 using Pso.BackEnd.Command.Request.RequestLente;
+using Pso.BackEnd.Command.Request.RequestOculos;
+using Pso.BackEnd.Command.Request.RequestParcela;
+using Pso.BackEnd.Command.Request.RequestPedido;
+using Pso.BackEnd.Command.Request.RequestPedidoOculos;
 using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.EFCore.Repositories;
@@ -25,10 +33,9 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
     public class NativeInjectorBootStrapper
     {
         public static void RegisterServices(IServiceCollection services)
-        {
-            // ASP.NET HttpContext dependency
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        {          
 
+            #region Mediator Write Dependency
             //Services Core dependency
             services.AddScoped<IMediator, Mediator>();
 
@@ -57,6 +64,29 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<UpdateLenteCommand, bool>, UpdateLenteCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteLenteCommand, bool>, DeleteLenteCommandHandler>();
 
+            //Contato Oculos
+            services.AddScoped<IRequestHandler<CreateOculosCommand, bool>, CreateOculosCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateOculosCommand, bool>, UpdateOculosCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteOculosCommand, bool>, DeleteOculosCommandHandler>();
+
+            //Contato Parcela
+            services.AddScoped<IRequestHandler<CreateParcelaCommand, bool>, CreateParcelaCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateParcelaCommand, bool>, UpdateParcelaCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteParcelaCommand, bool>, DeleteParcelaCommandHandler>();
+
+            //Contato Pedido
+            services.AddScoped<IRequestHandler<CreatePedidoCommand, bool>, CreatePedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdatePedidoCommand, bool>, UpdatePedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<DeletePedidoCommand, bool>, DeletePedidoCommandHandler>();
+
+            //Contato PedidoOculos
+            services.AddScoped<IRequestHandler<CreatePedidoOculosCommand, bool>, CreatePedidoOculosCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdatePedidoOculosCommand, bool>, UpdatePedidoOculosCommandHandler>();
+            services.AddScoped<IRequestHandler<DeletePedidoOculosCommand, bool>, DeletePedidoOculosCommandHandler>();
+
+            #endregion
+
+            #region Repository
             // Infra-Data UnitOfWork dependency
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -81,11 +111,17 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IParcelaReadEfRepository, ParcelaEfRepository>();
             services.AddScoped<IPedidoReadEfRepository, PedidoEfRepository>();
             services.AddScoped<IPedidoOculosReadEfRepository, PedidoOculosEfRepository>();
+            #endregion
+
+            #region Context
+            // ASP.NET HttpContext dependency
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //Instance Context            
             services.AddScoped<NotificationContext>();
             services.AddScoped<DbContext, PsoDbContext>();
             services.AddScoped<PsoDbContext>();
+            #endregion
         }
     }
 }

@@ -11,10 +11,6 @@
 
   <ItemGroup>
     <Folder Include="Notifications\" />
-    <Folder Include="Request\RequestPedidoOculos\" />
-    <Folder Include="Request\RequestPedido\" />
-    <Folder Include="Request\RequestParcela\" />
-    <Folder Include="Request\RequestOculos\" />
   </ItemGroup>
 
   <ItemGroup>

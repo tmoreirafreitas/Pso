@@ -11,13 +11,15 @@ namespace Pso.BackEnd.Command.Handles
 {
     public class DeleteCommandHandler<T> : IRequestHandler<DeleteCommand<T>, bool> where T : Entity
     {
-        private readonly IWriteEfRepository<T> _repository;
-        private readonly IUnitOfWork _uow;
+        protected readonly IWriteEfRepository<T> _repository;
+        protected readonly IUnitOfWork _uow;
+        protected readonly IMediator _mediator;
 
-        public DeleteCommandHandler(IWriteEfRepository<T> repository, IUnitOfWork uow)
+        public DeleteCommandHandler(IWriteEfRepository<T> repository, IUnitOfWork uow, IMediator mediator)
         {
             _repository = repository;
             _uow = uow;
+            _mediator = mediator;
         }
 
         public async Task<bool> Handle(DeleteCommand<T> request, CancellationToken cancellationToken)
