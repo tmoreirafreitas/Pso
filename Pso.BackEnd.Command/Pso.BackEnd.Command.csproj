@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Notifications\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pso.BackEnd.Infra.Data.EFCore\Pso.BackEnd.Infra.Data.EFCore.csproj" />
   </ItemGroup>
 

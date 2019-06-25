@@ -12,5 +12,11 @@ namespace Pso.BackEnd.Command.Request.Generic
             Name = GetType().Name;
             Item = item;
         }
+
+        public override string ToString()
+        {
+            var info = $"CommandName:{Name}\r\nID: {MessageId}\r\n Created: {DateCreated}";
+            return info;
+        }
     }
 }
