@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Pso.BackEnd.Command.Handles.HandlerCliente;
 using Pso.BackEnd.Command.Handles.HandlerContato;
 using Pso.BackEnd.Command.Handles.HandlerEndereco;
@@ -24,8 +25,12 @@ using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.EFCore.Repositories;
 using Pso.BackEnd.Infra.Data.EFCore.UnitOfWork;
+using Pso.BackEnd.Infra.Data.NoSQLMdb;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Read;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
+using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
+using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Read;
+using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Write;
 using PSO.BackEnd.Domain.Interfaces.Repositories.UnitOfWork;
 
 namespace Pso.BackEnd.Infra.CrossCutting.IoC
@@ -33,7 +38,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
     public class NativeInjectorBootStrapper
     {
         public static void RegisterServices(IServiceCollection services)
-        {          
+        {
 
             #region Mediator Write Dependency
             //Services Core dependency
@@ -86,7 +91,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
 
             #endregion
 
-            #region Repository
+            #region Entity Framework Repository
             // Infra-Data UnitOfWork dependency
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -111,6 +116,33 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IParcelaReadEfRepository, ParcelaEfRepository>();
             services.AddScoped<IPedidoReadEfRepository, PedidoEfRepository>();
             services.AddScoped<IPedidoOculosReadEfRepository, PedidoOculosEfRepository>();
+            #endregion
+
+            #region MongoDb Repository            
+            services.AddSingleton<IPsoDbMongoDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<PsoDbMongoDatabaseSettings>>().Value);
+
+            // Infra-Data WriteMongoDbRepository dependency
+            services.AddScoped<IClienteWriteMongoRepository, ClienteMongoRepository>();
+            services.AddScoped<IContatoWriteMongoRepository, ContatoMongoRepository>();
+            services.AddScoped<IEnderecoWriteMongoRepository, EnderecoMongoRepository>();
+            services.AddScoped<IFaturaWriteMongoRepository, FaturaMongoRepository>();
+            services.AddScoped<ILenteWriteMongoRepository, LenteMongoRepository>();
+            services.AddScoped<IOculosWriteMongoRepository, OculosMongoRepository>();
+            services.AddScoped<IParcelaWriteMongoRepository, ParcelaMongoRepository>();
+            services.AddScoped<IPedidoWriteMongoRepository, PedidoMongoRepository>();
+            services.AddScoped<IPedidoOculosWriteMongoRepository, PedidoOculosMongoRepository>();
+
+            // Infra-Data ReadeMongoRepository dependency
+            services.AddScoped<IClienteReadMongoRepository, ClienteMongoRepository>();
+            services.AddScoped<IContatoReadMongoRepository, ContatoMongoRepository>();
+            services.AddScoped<IEnderecoReadMongoRepository, EnderecoMongoRepository>();
+            services.AddScoped<IFaturaReadMongoRepository, FaturaMongoRepository>();
+            services.AddScoped<ILenteReadMongoRepository, LenteMongoRepository>();
+            services.AddScoped<IOculosReadMongoRepository, OculosMongoRepository>();
+            services.AddScoped<IParcelaReadMongoRepository, ParcelaMongoRepository>();
+            services.AddScoped<IPedidoReadMongoRepository, PedidoMongoRepository>();
+            services.AddScoped<IPedidoOculosReadMongoRepository, PedidoOculosMongoRepository>();
             #endregion
 
             #region Context

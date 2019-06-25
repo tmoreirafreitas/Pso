@@ -12,7 +12,7 @@ namespace Pso.BackEnd.Infra.Data.NoSQLMdb
     {
         private readonly IMongoCollection<T> DbSet;
 
-        public MongoRepository(IMongoDatabaseSettings settings)
+        public MongoRepository(IPsoDbMongoDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);

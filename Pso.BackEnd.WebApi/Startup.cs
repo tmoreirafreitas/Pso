@@ -9,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Pso.BackEnd.Infra.CrossCutting.IoC;
+using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
+using Pso.BackEnd.Infra.Data.NoSQLMdb;
 using Pso.BackEnd.WebApi.AutoMapper;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -56,7 +58,7 @@ namespace Pso.BackEnd.WebApi
 
             services.AddMvc(options =>
             {
-                //options.Filters.Add<NotificationFilter>();
+                options.Filters.Add<NotificationFilter>();
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
@@ -66,6 +68,10 @@ namespace Pso.BackEnd.WebApi
             {
                 c.SwaggerDoc("v1", new Info { Title = "Portal de Serviço de Ótica Api", Version = "v1" });
             });
+
+            // Configure MongoDb
+            services.Configure<PsoDbMongoDatabaseSettings>(
+                    Configuration.GetSection(nameof(PsoDbMongoDatabaseSettings)));
 
             // .NET Native DI Abstraction
             RegisterServices(services);
@@ -100,7 +106,7 @@ namespace Pso.BackEnd.WebApi
         }
 
         private static void RegisterServices(IServiceCollection services)
-        {
+        {            
             // Adding dependencies from another layers (isolated from Presentation)
             NativeInjectorBootStrapper.RegisterServices(services);
         }

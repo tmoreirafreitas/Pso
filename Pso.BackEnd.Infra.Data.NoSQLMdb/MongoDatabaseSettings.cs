@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pso.BackEnd.Infra.Data.NoSQLMdb
 {
-    public class MongoDatabaseSettings : IMongoDatabaseSettings
+    public class PsoDbMongoDatabaseSettings : IPsoDbMongoDatabaseSettings
     {
         public string ConnectionString { get ; set; }
         public string DatabaseName { get; set; }
