@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Pso.BackEnd.Command.Notifications;
 using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
@@ -27,7 +28,12 @@ namespace Pso.BackEnd.Command.Handles
             try
             {
                 await _repository.AddAsync(request.Item);
-                return _uow.Commit();
+                var committed = _uow.Commit();
+                if(committed)
+                {
+                    await _mediator.Publish(new CreatedCommand<T>(request.Item));
+                }
+                return committed;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Pso.BackEnd.Command.Notifications;
 using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
@@ -25,9 +26,14 @@ namespace Pso.BackEnd.Command.Handles
         public async Task<bool> Handle(DeleteCommand<T> request, CancellationToken cancellationToken)
         {
             try
-            {                
+            {
                 await _repository.DeleteAsync(request.Id);
-                return _uow.Commit();
+                var committed = _uow.Commit();
+                if (committed)
+                {
+                    await _mediator.Publish(new DeletedCommand<T>(request.Id, request.Item));
+                }
+                return committed;
             }
             catch (Exception ex)
             {
