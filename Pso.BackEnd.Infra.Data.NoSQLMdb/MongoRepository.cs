@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
 using System;
@@ -12,10 +13,10 @@ namespace Pso.BackEnd.Infra.Data.NoSQLMdb
     {
         private readonly IMongoCollection<T> DbSet;
 
-        public MongoRepository(IPsoDbMongoDatabaseSettings settings)
+        public MongoRepository(IConfiguration configuration)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            var client = new MongoClient(configuration.GetConnectionString("MongoConnection"));
+            var database = client.GetDatabase(configuration.GetConnectionString("DatabaseName"));
             DbSet = database.GetCollection<T>(typeof(T).Name);
         }
         public async Task AddAsync(T obj)

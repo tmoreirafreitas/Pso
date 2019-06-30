@@ -18,11 +18,6 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
                 .HasMaxLength(15)
                 .IsRequired();
 
-            builder.Property(c => c.Email)
-                .HasColumnType("varchar(60)")
-                .HasMaxLength(40)
-                .IsRequired();
-
             builder.Property(c => c.Filiacao)
                 .HasColumnType("varchar(200)")
                 .HasMaxLength(150);
@@ -49,6 +44,7 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
             builder.HasOne(c => c.Endereco)
                 .WithOne(e => e.Cliente)
                 .HasForeignKey<Endereco>(e => e.ClienteId)
+                .HasConstraintName("FK_Cliente_Endereco")
                 .IsRequired();
 
             builder.HasMany(c => c.Pedidos)

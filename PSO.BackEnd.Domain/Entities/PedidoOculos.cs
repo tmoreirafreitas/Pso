@@ -2,18 +2,16 @@
 {
     public class PedidoOculos : Entity
     {
-        public long PedidoId { get; set; }
+        public long PedidoId { get; private set; }
         public Pedido Pedido { get; set; }
 
-        public long OculosId { get; set; }
+        public long OculosId { get; private set; }
         public Oculos Oculos { get; set; }
 
-        public PedidoOculos(Pedido pedido, Oculos oculos)
+        public PedidoOculos(long pedidoId, long oculosId)
         {
-            PedidoId = pedido != null ? pedido.Id : 0;
-            Pedido = pedido;
-            OculosId = oculos != null ? oculos.Id : 0;
-            Oculos = oculos;
+            PedidoId = pedidoId;
+            OculosId = oculosId;
         }
     }
 }

@@ -8,15 +8,14 @@ namespace PSO.BackEnd.Domain.Entities
         public string Telefone { get; private set; }
         public string Email { get; private set; }
         public long ClienteId { get; private set; }
-        public Cliente Cliente { get; private set; }
+        public Cliente Cliente { get; set; }
 
-        public Contato(string nome, string telefone, string email, Cliente cliente)
+        public Contato(string nome, string telefone, string email, long clienteId)
         {
             Nome = nome;
             Telefone = telefone;
             Email = email;
-            ClienteId = cliente != null ? cliente.Id : 0;
-            Cliente = cliente;
+            ClienteId = clienteId;
             Validate(this, new ContatoValidator());
         }
     }

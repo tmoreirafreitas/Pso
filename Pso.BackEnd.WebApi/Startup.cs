@@ -3,17 +3,21 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Pso.BackEnd.Infra.CrossCutting.IoC;
 using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.NoSQLMdb;
 using Pso.BackEnd.WebApi.AutoMapper;
+using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Reflection;
 
@@ -31,6 +35,10 @@ namespace Pso.BackEnd.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+            });
             #region Add CORS  
             services.AddCors(options => options.AddPolicy("Cors", builder =>
             {
@@ -69,10 +77,6 @@ namespace Pso.BackEnd.WebApi
                 c.SwaggerDoc("v1", new Info { Title = "Portal de Serviço de Ótica Api", Version = "v1" });
             });
 
-            // Configure MongoDb
-            services.Configure<PsoDbMongoDatabaseSettings>(
-                    Configuration.GetSection(nameof(PsoDbMongoDatabaseSettings)));
-
             // .NET Native DI Abstraction
             RegisterServices(services);
         }
@@ -101,7 +105,10 @@ namespace Pso.BackEnd.WebApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portal de Serviço de Ótica Api V1");
+                c.DocExpansion(DocExpansion.None);
             });
+            app.UseMiddleware(typeof(RequestMiddliware));
+            app.UseResponseCompression();
             app.UseMvc();
         }
 

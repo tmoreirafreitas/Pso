@@ -39,7 +39,6 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-
             #region Mediator Write Dependency
             //Services Core dependency
             services.AddScoped<IMediator, Mediator>();
@@ -96,6 +95,8 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Infra-Data WriteEfRepository dependency
+            services.AddScoped(typeof(IWriteEfRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IWriteMongoRepository<>), typeof(MongoRepository<>));
             services.AddScoped<IClienteWriteEfRepository, ClienteEfRepository>();
             services.AddScoped<IContatoWriteEfRepository, ContatoEfRepository>();
             services.AddScoped<IEnderecoWriteEfRepository, EnderecoEfRepository>();
@@ -106,7 +107,9 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IPedidoWriteEfRepository, PedidoEfRepository>();
             services.AddScoped<IPedidoOculosWriteEfRepository, PedidoOculosEfRepository>();
 
-            // Infra-Data ReadeEfRepository dependency
+            // Infra-Data ReadeEfRepository dependency            
+            services.AddScoped(typeof(IReadEfRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IReadMongoRepository<>), typeof(MongoRepository<>));            
             services.AddScoped<IClienteReadEfRepository, ClienteEfRepository>();
             services.AddScoped<IContatoReadEfRepository, ContatoEfRepository>();
             services.AddScoped<IEnderecoReadEfRepository, EnderecoEfRepository>();
@@ -118,10 +121,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IPedidoOculosReadEfRepository, PedidoOculosEfRepository>();
             #endregion
 
-            #region MongoDb Repository            
-            services.AddSingleton<IPsoDbMongoDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<PsoDbMongoDatabaseSettings>>().Value);
-
+            #region MongoDb Repository          
             // Infra-Data WriteMongoDbRepository dependency
             services.AddScoped<IClienteWriteMongoRepository, ClienteMongoRepository>();
             services.AddScoped<IContatoWriteMongoRepository, ContatoMongoRepository>();

@@ -7,6 +7,10 @@ namespace Pso.BackEnd.Command.Request.Generic
     {
         public long Id { get; private set; }
 
+        public DeleteCommand(long id)
+        {
+            Id = id;
+        }
         public DeleteCommand(long id, T item) : base(item)
         {
             Id = id;

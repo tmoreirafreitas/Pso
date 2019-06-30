@@ -14,9 +14,9 @@ namespace PSO.BackEnd.Domain.Entities
         public int? Numero { get; private set; }
         public string Complemento { get; private set; }
         public long ClienteId { get; private set; }
-        public Cliente Cliente { get; private set; }
+        public Cliente Cliente { get; set; }
 
-    public Endereco(string logradouro, string bairro, string cidade, string estado, int? numero, string cep, string complemento, Cliente cliente)
+    public Endereco(string logradouro, string bairro, string cidade, string estado, int? numero, string cep, string complemento, long clienteId)
         {
             Logradouro = logradouro;
             Bairro = bairro;
@@ -25,8 +25,7 @@ namespace PSO.BackEnd.Domain.Entities
             Numero = numero;
             Complemento = complemento;
             Cep = cep;
-            Cliente = cliente;
-            ClienteId = cliente != null ? cliente.Id : 0;
+            ClienteId = clienteId;
             Validate(this, new EnderecoValidator());
         }
     }

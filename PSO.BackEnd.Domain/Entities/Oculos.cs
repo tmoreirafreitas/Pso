@@ -31,9 +31,9 @@ namespace PSO.BackEnd.Domain.Entities
             private set { }
         }
 
-        public Oculos(long? oculosId, string cor, float dP, float aLT)
+        public Oculos(long pedidoOculosId, string cor, float dP, float aLT)
         {
-            Id = oculosId ?? 0;
+            PedidoOculosId = pedidoOculosId;
             Cor = cor;
             DP = dP;
             ALT = aLT;

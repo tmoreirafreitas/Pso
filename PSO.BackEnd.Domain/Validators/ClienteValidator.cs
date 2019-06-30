@@ -14,7 +14,6 @@ namespace PSO.BackEnd.Domain.Validators
             });
 
             RuleFor(c => c.Cpf).NotEmpty().WithMessage("É necessário informar o CPF");
-            RuleFor(c => c.Email).NotEmpty().WithMessage("É necessário informar o E-mail");
             RuleFor(c => c.Nascimento).NotNull().WithMessage("É necessário informar a data de nascimento");
             RuleFor(c => c.Nome).NotEmpty().WithMessage("É necessário informar o nome");
             RuleFor(c => c.Rg).NotEmpty().WithMessage("É necessário informar o RG");            

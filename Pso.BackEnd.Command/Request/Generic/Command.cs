@@ -7,6 +7,10 @@ namespace Pso.BackEnd.Command.Request.Generic
         public string Name { get; private set; }
         public T Item { get; private set; }
 
+        public Command()
+        {
+
+        }
         public Command(T item)
         {
             Name = GetType().Name;

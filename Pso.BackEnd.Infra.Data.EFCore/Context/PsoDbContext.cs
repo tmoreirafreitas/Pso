@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Pso.BackEnd.Infra.Data.EFCore.Mappings;
 using System.IO;
@@ -9,12 +11,22 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Context
     {
         public PsoDbContext()
         {
-            Database.EnsureCreated();
+            // Create the database
+            if (Database.EnsureCreated())
+            {
+                RelationalDatabaseCreator databaseCreator = (RelationalDatabaseCreator)Database.GetService<IDatabaseCreator>();
+                databaseCreator.CreateTables();
+            }
         }
 
         public PsoDbContext(DbContextOptions<PsoDbContext> options) : base(options)
         {
-            Database.EnsureCreated();   // Create the database
+            // Create the database
+            if (!Database.EnsureCreated())
+            {
+                RelationalDatabaseCreator databaseCreator = (RelationalDatabaseCreator)Database.GetService<IDatabaseCreator>();
+                databaseCreator.CreateTables();
+            }           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

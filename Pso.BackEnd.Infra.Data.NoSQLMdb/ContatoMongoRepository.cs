@@ -1,5 +1,5 @@
-﻿using PSO.BackEnd.Domain.Entities;
-using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
+﻿using Microsoft.Extensions.Configuration;
+using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Read;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Write;
 
@@ -7,7 +7,7 @@ namespace Pso.BackEnd.Infra.Data.NoSQLMdb
 {
     public class ContatoMongoRepository : MongoRepository<Contato>, IContatoWriteMongoRepository, IContatoReadMongoRepository
     {
-        public ContatoMongoRepository(IPsoDbMongoDatabaseSettings settings) : base(settings)
+        public ContatoMongoRepository(IConfiguration configuration) : base(configuration)
         {
         }
     }

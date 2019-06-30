@@ -37,10 +37,6 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
                 .HasColumnType("numeric(10,2)")
                 .IsRequired();
 
-            builder.Property(fat => fat.IsPaga)
-                .HasColumnType("bit")
-                .IsRequired();
-
             builder.HasMany(f => f.Parcelas)
                 .WithOne(p => p.Fatura)
                 .HasForeignKey(p => p.FaturaId)

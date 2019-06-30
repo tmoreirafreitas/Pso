@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pso.BackEnd.Infra.Data.EFCore\Pso.BackEnd.Infra.Data.EFCore.csproj" />
+    <ProjectReference Include="..\Pso.BackEnd.Infra.Data.NoSQLMdb\Pso.BackEnd.Infra.Data.NoSQLMdb.csproj" />
   </ItemGroup>
 
 </Project>

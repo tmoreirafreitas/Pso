@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Pso.BackEnd.WebApi.ViewModel;
+using PSO.BackEnd.Domain.Entities;
 
 namespace Pso.BackEnd.WebApi.AutoMapper
 {
@@ -10,7 +8,14 @@ namespace Pso.BackEnd.WebApi.AutoMapper
     {
         public ViewModelToDomainMappingProfile()
         {
-
+            CreateMap<ClienteViewModel, Cliente>();
+            CreateMap<ContatoViewModel, Contato>();
+            CreateMap<EnderecoViewModel, Endereco>();
+            CreateMap<FaturaViewModel, Fatura>();
+            CreateMap<LenteViewModel, Lente>();
+            CreateMap<OculosViewModel, Oculos>();
+            CreateMap<ParcelaViewModel, Parcela>();
+            CreateMap<PedidoOculosViewModel, PedidoOculos>();
         }
     }
 }
