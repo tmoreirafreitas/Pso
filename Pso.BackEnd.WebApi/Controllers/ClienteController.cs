@@ -99,7 +99,7 @@ namespace Pso.BackEnd.WebApi.Controllers
         public async Task<IActionResult> Post([FromBody] ClienteViewModel cliente)
         {
             var obj = _mapper.Map<Cliente>(cliente);
-            await _mediator.Send(new CreateClienteCommand(obj)).ConfigureAwait(false);
+            await _mediator.Send(new CreateClienteCommand(obj));
             return Ok();
         }
 

@@ -1,6 +1,8 @@
-﻿namespace Pso.BackEnd.WebApi.ViewModel
+﻿using System;
+
+namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class EnderecoViewModel
+    public class EnderecoViewModel : EntityBaseViewModel
     {
         public string Cep { get; set; }
         public string Logradouro { get; set; }

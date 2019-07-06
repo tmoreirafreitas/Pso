@@ -1,6 +1,8 @@
-﻿namespace Pso.BackEnd.WebApi.ViewModel
+﻿using System;
+
+namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class ContatoViewModel
+    public class ContatoViewModel: EntityBaseViewModel
     {
         public string Nome { get; set; }
         public string Telefone { get; set; }

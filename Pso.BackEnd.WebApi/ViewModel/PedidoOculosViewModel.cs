@@ -1,4 +1,6 @@
-﻿namespace Pso.BackEnd.WebApi.ViewModel
+﻿using System;
+
+namespace Pso.BackEnd.WebApi.ViewModel
 {
     public class PedidoOculosViewModel
     {

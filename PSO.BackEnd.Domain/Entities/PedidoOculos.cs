@@ -1,4 +1,6 @@
-﻿namespace PSO.BackEnd.Domain.Entities
+﻿using System;
+
+namespace PSO.BackEnd.Domain.Entities
 {
     public class PedidoOculos : Entity
     {

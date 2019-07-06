@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PSO.BackEnd.Domain.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pso.BackEnd.Infra.Data.EFCore.Mappings
 {

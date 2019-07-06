@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb
 {
-    public interface IWriteMongoRepository<TEntity> : IDisposable where TEntity : Entity
+    public interface IWriteMongoRepository<TEntity> where TEntity : Entity
     {
         Task UpdateAsync(TEntity obj);
         Task UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity obj);

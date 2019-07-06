@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using System;
 
 namespace PSO.BackEnd.Domain.Entities
 {

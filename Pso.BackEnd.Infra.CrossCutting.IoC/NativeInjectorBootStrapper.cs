@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Pso.BackEnd.Command.Handles;
 using Pso.BackEnd.Command.Handles.HandlerCliente;
 using Pso.BackEnd.Command.Handles.HandlerContato;
 using Pso.BackEnd.Command.Handles.HandlerEndereco;
@@ -26,6 +26,7 @@ using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.EFCore.Repositories;
 using Pso.BackEnd.Infra.Data.EFCore.UnitOfWork;
 using Pso.BackEnd.Infra.Data.NoSQLMdb;
+using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Read;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
@@ -44,49 +45,86 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IMediator, Mediator>();
 
             //Cliente Request
-            services.AddScoped<IRequestHandler<CreateClienteCommand, bool>, CreateClienteCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateClienteCommand, bool>, UpdateClienteCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteClienteCommand, bool>, DeleteClienteCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateClienteCommand, bool>, CreateClienteCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateClienteCommand, bool>, UpdateClienteCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteClienteCommand, bool>, DeleteClienteCommandHandler>();
 
             //Endereco Request
-            services.AddScoped<IRequestHandler<CreateEnderecoCommand, bool>, CreateEnderecoCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateEnderecoCommand, bool>, UpdateEnderecoCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteEnderecoCommand, bool>, DeleteEnderecoCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateEnderecoCommand, bool>, CreateEnderecoCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateEnderecoCommand, bool>, UpdateEnderecoCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteEnderecoCommand, bool>, DeleteEnderecoCommandHandler>();
 
             //Contato Request
-            services.AddScoped<IRequestHandler<CreateContatoCommand, bool>, CreateContatoCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateContatoCommand, bool>, UpdateContatoCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteContatoCommand, bool>, DeleteContatoCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateContatoCommand, bool>, CreateContatoCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateContatoCommand, bool>, UpdateContatoCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteContatoCommand, bool>, DeleteContatoCommandHandler>();
 
             //Contato Fatura
-            services.AddScoped<IRequestHandler<CreateFaturaCommand, bool>, CreateFaturaCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateFaturaCommand, bool>, UpdateFaturaCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteFaturaCommand, bool>, DeleteFaturaCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateFaturaCommand, bool>, CreateFaturaCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateFaturaCommand, bool>, UpdateFaturaCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteFaturaCommand, bool>, DeleteFaturaCommandHandler>();
 
             //Contato Lente
-            services.AddScoped<IRequestHandler<CreateLenteCommand, bool>, CreateLenteCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateLenteCommand, bool>, UpdateLenteCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteLenteCommand, bool>, DeleteLenteCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateLenteCommand, bool>, CreateLenteCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateLenteCommand, bool>, UpdateLenteCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteLenteCommand, bool>, DeleteLenteCommandHandler>();
 
             //Contato Oculos
-            services.AddScoped<IRequestHandler<CreateOculosCommand, bool>, CreateOculosCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateOculosCommand, bool>, UpdateOculosCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteOculosCommand, bool>, DeleteOculosCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateOculosCommand, bool>, CreateOculosCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateOculosCommand, bool>, UpdateOculosCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteOculosCommand, bool>, DeleteOculosCommandHandler>();
 
             //Contato Parcela
-            services.AddScoped<IRequestHandler<CreateParcelaCommand, bool>, CreateParcelaCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateParcelaCommand, bool>, UpdateParcelaCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteParcelaCommand, bool>, DeleteParcelaCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateParcelaCommand, bool>, CreateParcelaCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateParcelaCommand, bool>, UpdateParcelaCommandHandler>();
+            services.AddTransient<IRequestHandler<DeleteParcelaCommand, bool>, DeleteParcelaCommandHandler>();
 
             //Contato Pedido
-            services.AddScoped<IRequestHandler<CreatePedidoCommand, bool>, CreatePedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdatePedidoCommand, bool>, UpdatePedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<DeletePedidoCommand, bool>, DeletePedidoCommandHandler>();
+            services.AddTransient<IRequestHandler<CreatePedidoCommand, bool>, CreatePedidoCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdatePedidoCommand, bool>, UpdatePedidoCommandHandler>();
+            services.AddTransient<IRequestHandler<DeletePedidoCommand, bool>, DeletePedidoCommandHandler>();
 
             //Contato PedidoOculos
-            services.AddScoped<IRequestHandler<CreatePedidoOculosCommand, bool>, CreatePedidoOculosCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdatePedidoOculosCommand, bool>, UpdatePedidoOculosCommandHandler>();
-            services.AddScoped<IRequestHandler<DeletePedidoOculosCommand, bool>, DeletePedidoOculosCommandHandler>();
+            services.AddTransient<IRequestHandler<CreatePedidoOculosCommand, bool>, CreatePedidoOculosCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdatePedidoOculosCommand, bool>, UpdatePedidoOculosCommandHandler>();
+            services.AddTransient<IRequestHandler<DeletePedidoOculosCommand, bool>, DeletePedidoOculosCommandHandler>();
+
+            // Notifications
+            services.AddTransient<INotificationHandler<CreateClienteCommand>, CreatedNotificationHandler<Cliente>>();
+            services.AddTransient<INotificationHandler<DeleteClienteCommand>, DeletedNotificationHandler<Cliente>>();
+            services.AddTransient<INotificationHandler<UpdateClienteCommand>, UpdatedNotificationHandler<Cliente>>();
+
+            services.AddTransient<INotificationHandler<CreateEnderecoCommand>, CreatedNotificationHandler<Endereco>>();
+            services.AddTransient<INotificationHandler<DeleteEnderecoCommand>, DeletedNotificationHandler<Endereco>>();
+            services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, UpdatedNotificationHandler<Endereco>>();
+
+            services.AddTransient<INotificationHandler<CreateContatoCommand>, CreatedNotificationHandler<Contato>>();
+            services.AddTransient<INotificationHandler<DeleteContatoCommand>, DeletedNotificationHandler<Contato>>();
+            services.AddTransient<INotificationHandler<UpdateContatoCommand>, UpdatedNotificationHandler<Contato>>();
+
+            services.AddTransient<INotificationHandler<CreateFaturaCommand>, CreatedNotificationHandler<Fatura>>();
+            services.AddTransient<INotificationHandler<DeleteFaturaCommand>, DeletedNotificationHandler<Fatura>>();
+            services.AddTransient<INotificationHandler<UpdateFaturaCommand>, UpdatedNotificationHandler<Fatura>>();
+
+            services.AddTransient<INotificationHandler<CreateLenteCommand>, CreatedNotificationHandler<Lente>>();
+            services.AddTransient<INotificationHandler<DeleteLenteCommand>, DeletedNotificationHandler<Lente>>();
+            services.AddTransient<INotificationHandler<UpdateLenteCommand>, UpdatedNotificationHandler<Lente>>();
+
+            services.AddTransient<INotificationHandler<CreateOculosCommand>, CreatedNotificationHandler<Oculos>>();
+            services.AddTransient<INotificationHandler<DeleteOculosCommand>, DeletedNotificationHandler<Oculos>>();
+            services.AddTransient<INotificationHandler<UpdateOculosCommand>, UpdatedNotificationHandler<Oculos>>();
+
+            services.AddTransient<INotificationHandler<CreateParcelaCommand>, CreatedNotificationHandler<Parcela>>();
+            services.AddTransient<INotificationHandler<DeleteParcelaCommand>, DeletedNotificationHandler<Parcela>>();
+            services.AddTransient<INotificationHandler<UpdateParcelaCommand>, UpdatedNotificationHandler<Parcela>>();
+
+            services.AddTransient<INotificationHandler<CreatePedidoCommand>, CreatedNotificationHandler<Pedido>>();
+            services.AddTransient<INotificationHandler<DeletePedidoCommand>, DeletedNotificationHandler<Pedido>>();
+            services.AddTransient<INotificationHandler<UpdatePedidoCommand>, UpdatedNotificationHandler<Pedido>>();
+
+            services.AddTransient<INotificationHandler<CreatePedidoOculosCommand>, CreatedNotificationHandler<PedidoOculos>>();
+            services.AddTransient<INotificationHandler<DeletePedidoOculosCommand>, DeletedNotificationHandler<PedidoOculos>>();
+            services.AddTransient<INotificationHandler<UpdatePedidoOculosCommand>, UpdatedNotificationHandler<PedidoOculos>>();
 
             #endregion
 
@@ -95,8 +133,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Infra-Data WriteEfRepository dependency
-            services.AddScoped(typeof(IWriteEfRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IWriteMongoRepository<>), typeof(MongoRepository<>));
+            services.AddScoped(typeof(IWriteEfRepository<>), typeof(Repository<>));            
             services.AddScoped<IClienteWriteEfRepository, ClienteEfRepository>();
             services.AddScoped<IContatoWriteEfRepository, ContatoEfRepository>();
             services.AddScoped<IEnderecoWriteEfRepository, EnderecoEfRepository>();
@@ -108,8 +145,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IPedidoOculosWriteEfRepository, PedidoOculosEfRepository>();
 
             // Infra-Data ReadeEfRepository dependency            
-            services.AddScoped(typeof(IReadEfRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IReadMongoRepository<>), typeof(MongoRepository<>));            
+            services.AddScoped(typeof(IReadEfRepository<>), typeof(Repository<>));            
             services.AddScoped<IClienteReadEfRepository, ClienteEfRepository>();
             services.AddScoped<IContatoReadEfRepository, ContatoEfRepository>();
             services.AddScoped<IEnderecoReadEfRepository, EnderecoEfRepository>();
@@ -153,6 +189,9 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<NotificationContext>();
             services.AddScoped<DbContext, PsoDbContext>();
             services.AddScoped<PsoDbContext>();
+            services.AddScoped<MongoDataContext>();
+            services.AddScoped(typeof(IReadMongoRepository<>), typeof(MongoRepository<>));
+            services.AddScoped(typeof(IWriteMongoRepository<>), typeof(MongoRepository<>));
             #endregion
         }
     }

@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Pso.BackEnd.Infra.Data.NoSQLMdb
 {
-    public class PsoDbMongoDatabaseSettings : IPsoDbMongoDatabaseSettings
+    public class PsoDbMongoDatabaseSettings
     {
         public string ConnectionString { get ; set; }
         public string DatabaseName { get; set; }
+        public bool IsSSL { get; set; }
     }
 }

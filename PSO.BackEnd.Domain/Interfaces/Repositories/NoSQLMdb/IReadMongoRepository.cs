@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb
 {
-    public interface IReadMongoRepository<TEntity> : IDisposable where TEntity : Entity
+    public interface IReadMongoRepository<TEntity> where TEntity : Entity
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize);

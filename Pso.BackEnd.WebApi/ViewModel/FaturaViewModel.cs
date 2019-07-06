@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class FaturaViewModel
+    public class FaturaViewModel : EntityBaseViewModel
     {
         public decimal Valor { get; set; }
         public decimal Total { get; set; }
