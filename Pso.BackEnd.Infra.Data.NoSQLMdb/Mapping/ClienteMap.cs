@@ -10,7 +10,6 @@ namespace Pso.BackEnd.Infra.Data.NoSQLMdb.Mapping
         {
             RegisterClassMap<Cliente>(map => 
             {
-                //map.AutoMap();
                 map.SetIgnoreExtraElements(true);                
                 map.MapMember(x => x.Cpf).SetIsRequired(true);
                 map.MapMember(x => x.Contatos).SetIsRequired(false);

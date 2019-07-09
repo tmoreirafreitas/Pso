@@ -21,7 +21,7 @@ namespace Pso.BackEnd.Command.Handles
             _mediator = mediator;
         }
 
-        public async Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
+        public virtual async Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Pso.BackEnd.Command.Handles
                 var committed = _uow.Commit();
                 if (committed)
                 {
-                    await _mediator.Publish(new UpdateCommand<T>(request.Id, request.Item));
+                    await _mediator.Publish(request);
                 }
                 return committed;
             }

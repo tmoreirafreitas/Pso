@@ -8,6 +8,8 @@
             ClienteMap.Configure();
             ContatoMap.Configure();
             EnderecoMap.Configure();
+            FaturaMap.Configure();
+            PedidoMap.Configure();
         }
     }
 }

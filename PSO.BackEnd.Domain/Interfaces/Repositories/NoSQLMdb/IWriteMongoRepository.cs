@@ -13,5 +13,6 @@ namespace PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb
         Task DeleteAsync(Expression<Func<TEntity, bool>> expression);
         Task DeleteAsync(TEntity obj);
         Task DeleteAsync(long id);
+
     }
 }
