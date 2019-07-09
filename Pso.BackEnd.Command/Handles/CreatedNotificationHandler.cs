@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Pso.BackEnd.Command.Notifications;
+using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
 using System.Threading;
@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Command.Handles
 {
-    public class CreatedNotificationHandler<T> : INotificationHandler<CreatedCommand<T>> where T : Entity
+    public class CreatedNotificationHandler<T> : INotificationHandler<CreateCommand<T>> where T : Entity
     {
-        private IWriteMongoRepository<T> _repository;
+        protected readonly IWriteMongoRepository<T> _repository;
 
         public CreatedNotificationHandler(IWriteMongoRepository<T> repository)
         {
             _repository = repository;
         }
 
-        public async Task Handle(CreatedCommand<T> notification, CancellationToken cancellationToken)
+        public Task Handle(CreateCommand<T> notification, CancellationToken cancellationToken)
         {
-            await _repository.AddAsync(notification.Item);
+            _repository.AddAsync(notification.Item);
+            return Task.FromResult(true);
         }
     }
 }

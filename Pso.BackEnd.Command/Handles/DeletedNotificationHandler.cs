@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Pso.BackEnd.Command.Notifications;
+using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
 using System.Threading;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Command.Handles
 {
-    public class DeletedNotificationHandler<T> : INotificationHandler<DeletedCommand<T>> where T : Entity
+    public class DeletedNotificationHandler<T> : INotificationHandler<DeleteCommand<T>> where T : Entity
     {
         private IWriteMongoRepository<T> _repository;
 
@@ -16,9 +16,10 @@ namespace Pso.BackEnd.Command.Handles
             _repository = repository;
         }
 
-        public async Task Handle(DeletedCommand<T> notification, CancellationToken cancellationToken)
+        public Task Handle(DeleteCommand<T> notification, CancellationToken cancellationToken)
         {
-            await _repository.DeleteAsync(notification.Id);
+            _repository.DeleteAsync(notification.Id);
+            return Task.CompletedTask;
         }
     }
 }

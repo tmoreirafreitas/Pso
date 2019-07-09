@@ -1,8 +1,9 @@
 ﻿using PSO.BackEnd.Domain.Enum;
+using System;
 
 namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class LenteViewModel
+    public class LenteViewModel : EntityBaseViewModel
     {
         public float Grau { get; set; }
         public float Cyl { get; set; }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class ClienteViewModel
+    public class ClienteViewModel: EntityBaseViewModel
     {
         public string Nome { get; set; }
         public string Rg { get; set; }

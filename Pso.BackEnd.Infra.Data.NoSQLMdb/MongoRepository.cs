@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
 using System;
@@ -11,84 +10,73 @@ namespace Pso.BackEnd.Infra.Data.NoSQLMdb
 {
     public class MongoRepository<T> : IWriteMongoRepository<T>, IReadMongoRepository<T> where T : Entity
     {
-        private readonly IMongoCollection<T> DbSet;
+        private readonly MongoDataContext _dataContext;
+        protected readonly IMongoCollection<T> _collection;
 
-        public MongoRepository(IConfiguration configuration)
+        public MongoRepository(MongoDataContext context)
         {
-            var client = new MongoClient(configuration.GetConnectionString("MongoConnection"));
-            var database = client.GetDatabase(configuration.GetConnectionString("DatabaseName"));
-            DbSet = database.GetCollection<T>(typeof(T).Name);
+            _dataContext = context;
+            _collection = _dataContext.MongoDatabase.GetCollection<T>(typeof(T).Name);
         }
-        public async Task AddAsync(T obj)
+        public Task AddAsync(T obj)
         {
-            await DbSet.InsertOneAsync(obj);
-        }
-
-        public async Task DeleteAsync(Expression<Func<T, bool>> expression)
-        {
-            await DbSet.DeleteOneAsync(expression);
+            return _collection.InsertOneAsync(obj);
         }
 
-        public async Task DeleteAsync(T obj)
+        public Task DeleteAsync(Expression<Func<T, bool>> expression)
         {
-            await DbSet.DeleteOneAsync(t => t.Id.Equals(obj.Id));
+            return _collection.DeleteOneAsync(expression);
         }
 
-        public async Task DeleteAsync(long id)
+        public Task DeleteAsync(T obj)
         {
-            await DbSet.DeleteOneAsync(t => t.Id.Equals(id));
+            return _collection.DeleteOneAsync(t => t.Id.Equals(obj.Id));
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public Task DeleteAsync(long id)
         {
-            return await Task.Run(() =>
-            {
-                return DbSet.AsQueryable().ToList();
-            });
+            return _collection.DeleteOneAsync(t => t.Id.Equals(id));
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(int page, int pageSize)
+        public Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Task.Run(() =>
-            {
-                return DbSet.AsQueryable().Skip(page).Take(pageSize).ToList();
-            });
+            return Task.FromResult(_collection.AsQueryable().AsEnumerable());
         }
 
-        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> expression)
+        public Task<IEnumerable<T>> GetAllAsync(int page, int pageSize)
         {
-            var result = await DbSet.FindAsync(expression);
-            return result.ToList();
+            return Task.FromResult(_collection.AsQueryable().Skip(page).Take(pageSize).AsEnumerable());
         }
 
-        public async Task<T> GetByIdAsync(long id)
+        public Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> expression)
         {
-            var result = await DbSet.FindAsync(t => t.Id.Equals(id));
-            return await result.FirstOrDefaultAsync();
+            var result = _collection.FindAsync(expression).GetAwaiter().GetResult();
+            return Task.FromResult(result.ToEnumerable());
         }
 
-        public async Task<T> SingleAsync(Expression<Func<T, bool>> expression)
+        public Task<T> GetByIdAsync(long id)
         {
-            var result = await DbSet.FindAsync(expression);
-            return await result.SingleOrDefaultAsync();
+            var result = _collection.FindAsync(t => t.Id.Equals(id)).GetAwaiter().GetResult();
+            return Task.FromResult(result.FirstOrDefault());
         }
 
-        public async Task UpdateAsync(T obj)
+        public Task<T> SingleAsync(Expression<Func<T, bool>> expression)
+        {
+            var result = _collection.FindAsync(expression).GetAwaiter().GetResult();
+            return Task.FromResult(result.FirstOrDefault());
+        }
+
+        public Task UpdateAsync(T obj)
         {
             var filter = Builders<T>.Filter.Eq(s => s.Id, obj.Id);
             var options = new UpdateOptions { IsUpsert = false };
-            await DbSet.ReplaceOneAsync(filter, obj, options);
+            return Task.FromResult(_collection.ReplaceOneAsync(filter, obj, options));
         }
 
-        public async Task UpdateAsync(Expression<Func<T, bool>> expression, T obj)
+        public Task UpdateAsync(Expression<Func<T, bool>> expression, T obj)
         {
             var options = new UpdateOptions { IsUpsert = false };
-            await DbSet.ReplaceOneAsync(expression, obj, options);
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
+            return Task.FromResult(_collection.ReplaceOneAsync(expression, obj, options));
         }
     }
 }

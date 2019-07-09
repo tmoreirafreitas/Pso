@@ -1,4 +1,5 @@
 ﻿using PSO.BackEnd.Domain.Validators;
+using System;
 
 namespace PSO.BackEnd.Domain.Entities
 {

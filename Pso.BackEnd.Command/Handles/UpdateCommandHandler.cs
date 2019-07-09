@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Pso.BackEnd.Command.Notifications;
 using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
@@ -22,7 +21,7 @@ namespace Pso.BackEnd.Command.Handles
             _mediator = mediator;
         }
 
-        public async Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
+        public virtual async Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
         {
             try
             {
@@ -30,7 +29,7 @@ namespace Pso.BackEnd.Command.Handles
                 var committed = _uow.Commit();
                 if (committed)
                 {
-                    await _mediator.Publish(new UpdatedCommand<T>(request.Id, request.Item));
+                    await _mediator.Publish(request);
                 }
                 return committed;
             }

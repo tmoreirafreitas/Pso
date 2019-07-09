@@ -1,8 +1,10 @@
-﻿using PSO.BackEnd.Domain.Entities;
+﻿using System;
+using MediatR;
+using PSO.BackEnd.Domain.Entities;
 
 namespace Pso.BackEnd.Command.Request.Generic
 {
-    public class Command<T> : Message where T : Entity
+    public class Command<T> : Message, INotification where T : Entity
     {
         public string Name { get; private set; }
         public T Item { get; private set; }

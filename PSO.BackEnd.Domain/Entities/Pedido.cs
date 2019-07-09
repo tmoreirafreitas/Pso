@@ -19,7 +19,7 @@ namespace PSO.BackEnd.Domain.Entities
         public ICollection<PedidoOculos> PedidosOculos { get; private set; }        
         public decimal Preco { get; private set; }
 
-        public Pedido(string servico, string medico, decimal preco, DateTime dataEntrega, DateTime dataSolicitacao, 
+        public Pedido(string servico, string medico, decimal preco, DateTime dataEntrega, DateTime dataSolicitacao,
             long clienteId, long faturaId, string obs)
         {
             Servico = servico;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class PedidoViewModel
+    public class PedidoViewModel : EntityBaseViewModel
     {
         public string Servico { get; set; }
         public string Obs { get; set; }
@@ -12,7 +12,6 @@ namespace Pso.BackEnd.WebApi.ViewModel
         public DateTime DataSolicitacao { get; set; }
         public long ClienteId { get; set; }
         public ClienteViewModel Cliente { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
         public ICollection<PedidoOculosViewModel> PedidosOculos { get; set; }
         public FaturaViewModel Fatura { get; set; }
         public decimal Preco { get; set; }

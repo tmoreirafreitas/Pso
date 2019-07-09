@@ -29,9 +29,9 @@ namespace Pso.BackEnd.WebApi.Controllers
 
         // GET: api/Cliente
         [HttpGet]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200)]        
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Get()
         {
             var clientes = await _clienteReadMongoRepository.GetAllAsync();
@@ -42,9 +42,9 @@ namespace Pso.BackEnd.WebApi.Controllers
         }
 
         //// GET: api/Cliente/5
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200)]        
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> Get(long id)
         {
@@ -54,9 +54,9 @@ namespace Pso.BackEnd.WebApi.Controllers
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
         }
 
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200)]        
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpGet("{cpf}", Name = "GetByCpf")]
         public async Task<IActionResult> GetByCpf(string cpf)
         {
@@ -66,9 +66,9 @@ namespace Pso.BackEnd.WebApi.Controllers
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
         }
 
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200)]        
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpGet("{phone}", Name = "GetByPhone")]
         public async Task<IActionResult> GetByPhone(string phone)
         {
@@ -78,9 +78,9 @@ namespace Pso.BackEnd.WebApi.Controllers
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
         }
 
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200)]        
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpGet("{email}", Name = "GetByEmail")]
         public async Task<IActionResult> GetByEmail(string email)
         {
@@ -93,18 +93,22 @@ namespace Pso.BackEnd.WebApi.Controllers
 
         // POST: api/Cliente
         [HttpPost]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(201)]        
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Post([FromBody] ClienteViewModel cliente)
         {
             var obj = _mapper.Map<Cliente>(cliente);
-            await _mediator.Send(new CreateClienteCommand(obj)).ConfigureAwait(false);
+            await _mediator.Send(new CreateClienteCommand(obj));
             return Ok();
         }
 
         // PUT: api/Cliente/5
         [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]        
         public async Task<IActionResult> Put(int id, [FromBody] ClienteViewModel cliente)
         {
             await _mediator.Send(new UpdateClienteCommand(id, _mapper.Map<Cliente>(cliente))).ConfigureAwait(false);
@@ -112,9 +116,9 @@ namespace Pso.BackEnd.WebApi.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [ProducesResponseType(200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200)]       
         [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {

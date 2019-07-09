@@ -2,7 +2,7 @@
 
 namespace Pso.BackEnd.WebApi.ViewModel
 {
-    public class ParcelaViewModel
+    public class ParcelaViewModel : EntityBaseViewModel
     {
         public int Numero { get; set; }
         public decimal Valor { get; set; }

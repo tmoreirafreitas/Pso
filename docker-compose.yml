@@ -1,22 +1,55 @@
 version: '3.4'
 
-networks:
-  pcdev:
-    external:
-      name: pcdev
-
 services:
   pso.backend.webapi:
-    image: ${DOCKER_REGISTRY-}psobackendwebapi    
+    image: ${DOCKER_REGISTRY-}psobackendwebapi  
+    depends_on:
+      - "postgres_image"
+      - "mongo_image"
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: psobackendwebapi
+      dockerfile: Dockerfile    
     ports:
       - "80:8080"
     environment:
-      DefaultConnection: ${DEFAULT_CONNECTION}
-    command: ifconfig
+      DB_CONNECTION_STRING: "User Id=psouser;Password=$PsoUser!;host=postgres_image;Port=5432;Database=psodb;Pooling=true;"
+    container_name: psobackendwebapi
     networks:
-      pcdev:
-        ipv4_address: 172.18.0.10
+      - pso-dev
+
+  postgres_image:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - postgres-data-volume:/var/lib/postgresql/data
+      - ./dbscripts/seed.sql :/docker-entrypoint-initdb.d/seed.sql
+    environment:
+      POSTGRES_USER: "psouser"
+      POSTGRES_PASSWORD: "$PsoUser!"
+      POSTGRES_DB: "psodb"
+    networks:
+      - pso-dev
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always    
+    volumes:
+      - mongo-data-volume:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "psouser"
+      MONGO_INITDB_ROOT_PASSWORD: "$PsoUser!"
+    container_name: mongo_image
+    networks:
+      - pso-dev
+
+  volumes:
+    - postgres-data-volume:
+    - mongo-data-volume:
+
+  networks:
+    pso-dev:
+      driver: bridge

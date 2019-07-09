@@ -8,14 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Pso.BackEnd.Infra.CrossCutting.IoC;
 using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
 using Pso.BackEnd.Infra.Data.EFCore.Context;
 using Pso.BackEnd.Infra.Data.NoSQLMdb;
+using Pso.BackEnd.Infra.Data.NoSQLMdb.Mapping;
 using Pso.BackEnd.WebApi.AutoMapper;
-using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
@@ -34,7 +33,35 @@ namespace Pso.BackEnd.WebApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {               
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // Registering Mappings automatically only works if the 
+            // Automapper Profile classes are in ASP.NET project
+            AutoMapperConfig.RegisterMappings();           
+
+            // Config Entity Framework
+            string migrationsAssembly = "Pso.BackEnd.Infra.Data.EFCore";
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<PsoDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly(migrationsAssembly)));
+
+            services.Configure<PsoDbMongoDatabaseSettings>(options =>
+            {
+                options.ConnectionString
+                    = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+                options.DatabaseName
+                    = Configuration.GetSection("MongoConnection:MongoDatabase").Value;
+                options.IsSSL = Convert.ToBoolean(Configuration.GetSection("MongoConnection:IsSSL").Value);
+            });
+
+            //Configure MongoDb
+            MongoDbPersistence.Configure();
+
+            //services.AddMediatR(typeof(NativeInjectorBootStrapper).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
@@ -45,31 +72,14 @@ namespace Pso.BackEnd.WebApi
                 builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader();
+                .AllowAnyHeader()
+                .AllowCredentials();
             }));
-            #endregion         
+            #endregion
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            // Registering Mappings automatically only works if the 
-            // Automapper Profile classes are in ASP.NET project
-            AutoMapperConfig.RegisterMappings();
-
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-
-            // Config Entity Framework
-            string migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name; //"Sgot.Infra.Data";//typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<PsoDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(migrationsAssembly)));
-
-            services.AddMvc(options =>
-            {
-                options.Filters.Add<NotificationFilter>();
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            // .NET Native DI Abstraction
+            // Adding dependencies from another layers (isolated from Presentation)
+            NativeInjectorBootStrapper.RegisterServices(services);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -77,8 +87,12 @@ namespace Pso.BackEnd.WebApi
                 c.SwaggerDoc("v1", new Info { Title = "Portal de Serviço de Ótica Api", Version = "v1" });
             });
 
-            // .NET Native DI Abstraction
-            RegisterServices(services);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<NotificationFilter>();
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,12 +124,6 @@ namespace Pso.BackEnd.WebApi
             app.UseMiddleware(typeof(RequestMiddliware));
             app.UseResponseCompression();
             app.UseMvc();
-        }
-
-        private static void RegisterServices(IServiceCollection services)
-        {            
-            // Adding dependencies from another layers (isolated from Presentation)
-            NativeInjectorBootStrapper.RegisterServices(services);
         }
     }
 }
