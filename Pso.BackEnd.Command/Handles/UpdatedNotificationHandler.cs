@@ -11,7 +11,6 @@ namespace Pso.BackEnd.Command.Handles
     {
         private IWriteMongoRepository<T> _repository;
 
-
         public UpdatedNotificationHandler(IWriteMongoRepository<T> repository)
         {
             _repository = repository;
@@ -19,7 +18,6 @@ namespace Pso.BackEnd.Command.Handles
 
         public Task Handle(UpdateCommand<T> notification, CancellationToken cancellationToken)
         {
-
             _repository.UpdateAsync(notification.Item);
             return Task.CompletedTask;
         }

@@ -22,16 +22,22 @@ namespace Pso.BackEnd.Command.Handles
             _mediator = mediator;
         }
 
-        public async Task<bool> Handle(DeleteCommand<T> request, CancellationToken cancellationToken)
+        public Task<bool> Handle(DeleteCommand<T> request, CancellationToken cancellationToken)
+        {
+            var committed = DeleteCommandItem(request);
+            if (committed)
+            {
+                _mediator.Publish(new DeleteCommand<T>(request.Id, request.Item));
+            }
+            return Task.FromResult(committed);
+        }
+
+        protected bool DeleteCommandItem(DeleteCommand<T> request)
         {
             try
             {
-                await _repository.DeleteAsync(request.Id);
+                _repository.Delete(request.Id);
                 var committed = _uow.Commit();
-                if (committed)
-                {
-                    await _mediator.Publish(new DeleteCommand<T>(request.Id, request.Item));
-                }
                 return committed;
             }
             catch (Exception ex)

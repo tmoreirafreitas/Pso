@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.WebApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/endereco")]
     [ApiController]
     public class EnderecoController : ControllerBase
@@ -31,26 +32,25 @@ namespace Pso.BackEnd.WebApi.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get(long clienteId)
         {
-            var cliente = await _clienteReadMongoRepository.SingleAsync(c=>c.Endereco.ClienteId.Equals(clienteId));
+            var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Endereco.ClienteId.Equals(clienteId));
             var endereco = cliente.Endereco;
             return Ok(_mapper.Map<EnderecoViewModel>(endereco));
         }
 
-        // GET: api/Endereco/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/Endereco
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Post([FromBody] EnderecoViewModel enderecoViewModel)
         {
+            var endereco = _mapper.Map<Endereco>(enderecoViewModel);
+            var committed = await _mediator.Send(new CreateEnderecoCommand(endereco));
+            return Ok(committed);
         }
 
         // PUT: api/Endereco/5
-        [HttpPut("cliente/{clienteId}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

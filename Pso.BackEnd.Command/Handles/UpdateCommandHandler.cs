@@ -21,17 +21,21 @@ namespace Pso.BackEnd.Command.Handles
             _mediator = mediator;
         }
 
-        public virtual async Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
+        public virtual Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
+        {
+            var committed = UpdateCommandItem(request).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (committed)
+                _mediator.Publish(request);
+            return Task.FromResult(committed);
+        }
+
+        protected Task<bool> UpdateCommandItem(UpdateCommand<T> updateCommand)
         {
             try
             {
-                await _repository.UpdateAsync(i => i.Equals(request.Id), request.Item);
+                _repository.Update(updateCommand.Item);
                 var committed = _uow.Commit();
-                if (committed)
-                {
-                    await _mediator.Publish(request);
-                }
-                return committed;
+                return Task.FromResult(committed);
             }
             catch (Exception ex)
             {

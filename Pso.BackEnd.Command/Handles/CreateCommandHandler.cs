@@ -22,17 +22,20 @@ namespace Pso.BackEnd.Command.Handles
             _mediator = mediator;
         }
 
-        public Task<bool> Handle(CreateCommand<T> request, CancellationToken cancellationToken)
+        public virtual Task<bool> Handle(CreateCommand<T> request, CancellationToken cancellationToken)
+        {
+            var committed = CreateCommandItem(request);
+            if(committed)
+                _mediator.Publish(request);
+            return Task.FromResult(committed);
+        }
+
+        protected bool CreateCommandItem(CreateCommand<T> createCommand)
         {
             try
             {
-                _repository.AddAsync(request.Item);
-                var committed = _uow.Commit();
-                if (committed)
-                {
-                    _mediator.Publish(request);
-                }
-                return Task.FromResult(committed);
+                _repository.Add(createCommand.Item);
+                return _uow.Commit();
             }
             catch (Exception ex)
             {

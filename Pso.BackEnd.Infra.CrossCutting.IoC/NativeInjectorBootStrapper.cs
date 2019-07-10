@@ -96,7 +96,8 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
 
             services.AddTransient<INotificationHandler<CreateEnderecoCommand>, CreatedNotificationHandler<Endereco>>();
             services.AddTransient<INotificationHandler<DeleteEnderecoCommand>, DeletedNotificationHandler<Endereco>>();
-            services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, UpdatedNotificationHandler<Endereco>>();
+            //services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, UpdatedNotificationHandler<Endereco>>();
+            services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, EnderecoUpdatedNotificationHandler>();
 
             services.AddTransient<INotificationHandler<CreateContatoCommand>, CreatedNotificationHandler<Contato>>();
             services.AddTransient<INotificationHandler<DeleteContatoCommand>, DeletedNotificationHandler<Contato>>();
@@ -125,6 +126,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddTransient<INotificationHandler<CreatePedidoOculosCommand>, CreatedNotificationHandler<PedidoOculos>>();
             services.AddTransient<INotificationHandler<DeletePedidoOculosCommand>, DeletedNotificationHandler<PedidoOculos>>();
             services.AddTransient<INotificationHandler<UpdatePedidoOculosCommand>, UpdatedNotificationHandler<PedidoOculos>>();
+            
 
             #endregion
 
@@ -133,7 +135,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Infra-Data WriteEfRepository dependency
-            services.AddScoped(typeof(IWriteEfRepository<>), typeof(Repository<>));            
+            services.AddScoped(typeof(IWriteEfRepository<>), typeof(Repository<>));
             services.AddScoped<IClienteWriteEfRepository, ClienteEfRepository>();
             services.AddScoped<IContatoWriteEfRepository, ContatoEfRepository>();
             services.AddScoped<IEnderecoWriteEfRepository, EnderecoEfRepository>();
@@ -145,7 +147,7 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddScoped<IPedidoOculosWriteEfRepository, PedidoOculosEfRepository>();
 
             // Infra-Data ReadeEfRepository dependency            
-            services.AddScoped(typeof(IReadEfRepository<>), typeof(Repository<>));            
+            services.AddScoped(typeof(IReadEfRepository<>), typeof(Repository<>));
             services.AddScoped<IClienteReadEfRepository, ClienteEfRepository>();
             services.AddScoped<IContatoReadEfRepository, ContatoEfRepository>();
             services.AddScoped<IEnderecoReadEfRepository, EnderecoEfRepository>();

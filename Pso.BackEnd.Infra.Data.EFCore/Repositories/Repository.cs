@@ -5,7 +5,6 @@ using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
 {
@@ -20,11 +19,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public async Task<TEntity> AddAsync(TEntity obj)
+        public TEntity Add(TEntity obj)
         {
             try
             {
-                var itemResult = await _dbSet.AddAsync(obj);
+                var itemResult = _dbSet.Add(obj);
                 return itemResult.Entity;
             }
             catch (DbUpdateException ex)
@@ -37,11 +36,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task DeleteAllAsync()
+        public void DeleteAll()
         {
             try
             {
-                await Task.Run(() => { _dbSet.RemoveRange(_dbSet); });
+                _dbSet.RemoveRange(_dbSet);
             }
             catch (DbUpdateException ex)
             {
@@ -53,12 +52,12 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task DeleteAsync(Expression<Func<TEntity, bool>> expression)
+        public void Delete(Expression<Func<TEntity, bool>> expression)
         {
             try
             {
-                var items = await GetAsync(expression);
-                await Task.Run(() => { _dbSet.RemoveRange(items); });
+                var items = Get(expression);
+                _dbSet.RemoveRange(items);
             }
             catch (DbUpdateException ex)
             {
@@ -70,11 +69,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task DeleteAsync(TEntity obj)
+        public void Delete(TEntity obj)
         {
             try
             {
-                await Task.Run(() => { _dbSet.Remove(obj); });
+                _dbSet.Remove(obj);
             }
             catch (DbUpdateException ex)
             {
@@ -86,12 +85,12 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task DeleteAsync(long id)
+        public void Delete(long id)
         {
             try
             {
-                var item = await SingleAsync(o => o.Id.Equals(id));
-                await Task.Run(() => { _dbSet.Remove(item); });
+                var item = _dbSet.FirstOrDefault(o => o.Id.Equals(id));
+                _dbSet.Remove(item);
             }
             catch (DbUpdateException ex)
             {
@@ -103,11 +102,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression)
+        public bool Exists(Expression<Func<TEntity, bool>> expression)
         {
             try
             {
-                return await Task.Run(() => { return _dbSet.Any(expression); });
+                return _dbSet.Any(expression);
             }
             catch (DbUpdateException ex)
             {
@@ -119,11 +118,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync()
+        public IQueryable<TEntity> GetAll()
         {
             try
             {
-                return await Task.Run(() => { return _dbSet.AsNoTracking(); });
+                return _dbSet.AsNoTracking();
             }
             catch (DbUpdateException ex)
             {
@@ -135,11 +134,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(int page, int pageSize)
+        public IQueryable<TEntity> GetAll(int page, int pageSize)
         {
             try
             {
-                return await Task.Run(() => { return _dbSet.AsNoTracking().Skip(page).Take(pageSize); });
+                return _dbSet.AsNoTracking().Skip(page).Take(pageSize);
             }
             catch (DbUpdateException ex)
             {
@@ -151,11 +150,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> expression)
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> expression)
         {
             try
             {
-                return await Task.Run(() => { return _dbSet.AsNoTracking().Where(expression); });
+                return _dbSet.AsNoTracking().Where(expression);
             }
             catch (DbUpdateException ex)
             {
@@ -167,11 +166,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<TEntity> GetByIdAsync(long id)
+        public TEntity GetById(long id)
         {
             try
             {
-                return await Task.Run(() => { return _dbSet.SingleAsync(o => o.Id.Equals(id)); });
+                return _dbSet.FirstOrDefault(o => o.Id.Equals(id));
             }
             catch (DbUpdateException ex)
             {
@@ -183,11 +182,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> expression)
+        public TEntity Single(Expression<Func<TEntity, bool>> expression)
         {
             try
             {
-                return await Task.Run(() => { return _dbSet.SingleAsync(expression); });
+                return _dbSet.SingleOrDefault(expression);
             }
             catch (DbUpdateException ex)
             {
@@ -199,16 +198,13 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity obj)
+        public TEntity Update(TEntity obj)
         {
             try
             {
-                return await Task.Run(() =>
-                {
-                    var updated = _dbSet.Update(obj);
-                    updated.State = EntityState.Modified;
-                    return updated.Entity;
-                });
+                var updated = _dbSet.Update(obj);
+                updated.State = EntityState.Modified;
+                return updated.Entity;
             }
             catch (DbUpdateException ex)
             {
@@ -220,11 +216,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Repositories
             }
         }
 
-        public async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity obj)
+        public TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity obj)
         {
             try
             {
-                var item = await SingleAsync(expression);
+                var item = _dbSet.SingleOrDefault(expression);
                 _context.Entry(item).State = EntityState.Modified;
                 _context.Entry(item).CurrentValues.SetValues(obj);
                 return obj;

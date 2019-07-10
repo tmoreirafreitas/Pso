@@ -33,7 +33,18 @@ namespace Pso.BackEnd.WebApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {               
+        {
+            #region Add CORS  
+            services.AddCors(options => options.AddPolicy("Cors", builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+            }));
+            #endregion
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Registering Mappings automatically only works if the 
@@ -65,17 +76,7 @@ namespace Pso.BackEnd.WebApi
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
-            });
-            #region Add CORS  
-            services.AddCors(options => options.AddPolicy("Cors", builder =>
-            {
-                builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials();
-            }));
-            #endregion
+            });            
 
             // .NET Native DI Abstraction
             // Adding dependencies from another layers (isolated from Presentation)

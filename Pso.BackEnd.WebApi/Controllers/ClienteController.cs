@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.WebApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/cliente")]
     [ApiController]
     public class ClienteController : ControllerBase

@@ -7,12 +7,12 @@ namespace PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write
 {
     public interface IWriteEfRepository<TEntity> where TEntity : Entity
     {
-        Task<TEntity> UpdateAsync(TEntity obj);
-        Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity obj);
-        Task<TEntity> AddAsync(TEntity obj);
-        Task DeleteAsync(Expression<Func<TEntity, bool>> expression);        
-        Task DeleteAsync(TEntity obj);
-        Task DeleteAsync(long id);
-        Task DeleteAllAsync();
+        TEntity Update(TEntity obj);
+        TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity obj);
+        TEntity Add(TEntity obj);
+        void Delete(Expression<Func<TEntity, bool>> expression);        
+        void Delete(TEntity obj);
+        void Delete(long id);
+        void DeleteAll();
     }
 }

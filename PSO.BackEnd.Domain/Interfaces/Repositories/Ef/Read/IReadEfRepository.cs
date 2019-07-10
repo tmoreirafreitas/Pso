@@ -8,11 +8,11 @@ namespace PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Read
 {
     public interface IReadEfRepository<TEntity> where TEntity : Entity
     {
-        Task<IQueryable<TEntity>> GetAllAsync();
-        Task<IQueryable<TEntity>> GetAllAsync(int page, int pageSize);
-        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> expression);
-        Task<TEntity> GetByIdAsync(long id);
-        Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> expression);
-        Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
+        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(int page, int pageSize);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> expression);
+        TEntity GetById(long id);
+        TEntity Single(Expression<Func<TEntity, bool>> expression);
+        bool Exists(Expression<Func<TEntity, bool>> expression);
     }
 }
