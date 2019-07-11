@@ -94,9 +94,8 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddTransient<INotificationHandler<DeleteClienteCommand>, DeletedNotificationHandler<Cliente>>();
             services.AddTransient<INotificationHandler<UpdateClienteCommand>, UpdatedNotificationHandler<Cliente>>();
 
-            services.AddTransient<INotificationHandler<CreateEnderecoCommand>, CreatedNotificationHandler<Endereco>>();
-            services.AddTransient<INotificationHandler<DeleteEnderecoCommand>, DeletedNotificationHandler<Endereco>>();
-            //services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, UpdatedNotificationHandler<Endereco>>();
+            services.AddTransient<INotificationHandler<CreateEnderecoCommand>, EnderecoCreatedNotificationHandler>();
+            services.AddTransient<INotificationHandler<DeleteEnderecoCommand>, EnderecoDeletedNotificationHandler>();
             services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, EnderecoUpdatedNotificationHandler>();
 
             services.AddTransient<INotificationHandler<CreateContatoCommand>, CreatedNotificationHandler<Contato>>();

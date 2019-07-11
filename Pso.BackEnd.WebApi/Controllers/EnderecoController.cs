@@ -42,10 +42,9 @@ namespace Pso.BackEnd.WebApi.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Post([FromBody] EnderecoViewModel enderecoViewModel)
+        public async Task<IActionResult> Post([FromBody] EnderecoViewModel endereco)
         {
-            var endereco = _mapper.Map<Endereco>(enderecoViewModel);
-            var committed = await _mediator.Send(new CreateEnderecoCommand(endereco));
+            var committed = await _mediator.Send(new CreateEnderecoCommand(_mapper.Map<Endereco>(endereco)));
             return Ok(committed);
         }
 
@@ -55,17 +54,21 @@ namespace Pso.BackEnd.WebApi.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Put(long id, [FromBody] EnderecoViewModel enderecoViewModel)
+        public async Task<IActionResult> Put(long id, [FromBody] EnderecoViewModel endereco)
         {
-            var endereco = _mapper.Map<Endereco>(enderecoViewModel);
-            var result = await _mediator.Send(new UpdateEnderecoCommand(id, endereco));
-            return Ok(result);
+            var committed = await _mediator.Send(new UpdateEnderecoCommand(id, _mapper.Map<Endereco>(endereco)));
+            return Ok(committed);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var committed = await _mediator.Send(new DeleteEnderecoCommand(id)).ConfigureAwait(false);
+            return Ok(committed);
         }
     }
 }

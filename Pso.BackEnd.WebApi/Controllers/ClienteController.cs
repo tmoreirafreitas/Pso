@@ -46,8 +46,8 @@ namespace Pso.BackEnd.WebApi.Controllers
         [ProducesResponseType(200)]        
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<IActionResult> Get(long id)
+        [HttpGet("{id}", Name = "GetById")]
+        public async Task<IActionResult> GetById(long id)
         {
             var cliente = await _clienteReadMongoRepository.GetByIdAsync(id);
             if (cliente == null)
@@ -100,8 +100,8 @@ namespace Pso.BackEnd.WebApi.Controllers
         public async Task<IActionResult> Post([FromBody] ClienteViewModel cliente)
         {
             var obj = _mapper.Map<Cliente>(cliente);
-            await _mediator.Send(new CreateClienteCommand(obj));
-            return Ok();
+            var committed = await _mediator.Send(new CreateClienteCommand(obj));
+            return Ok(committed);
         }
 
         // PUT: api/Cliente/5
@@ -112,8 +112,8 @@ namespace Pso.BackEnd.WebApi.Controllers
         [ProducesResponseType(500)]        
         public async Task<IActionResult> Put(int id, [FromBody] ClienteViewModel cliente)
         {
-            await _mediator.Send(new UpdateClienteCommand(id, _mapper.Map<Cliente>(cliente))).ConfigureAwait(false);
-            return Ok();
+            var committed = await _mediator.Send(new UpdateClienteCommand(id, _mapper.Map<Cliente>(cliente))).ConfigureAwait(false);
+            return Ok(committed);
         }
 
         // DELETE: api/ApiWithActions/5
@@ -123,8 +123,8 @@ namespace Pso.BackEnd.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            await _mediator.Send(new DeleteClienteCommand(id)).ConfigureAwait(false);
-            return Ok();
+            var committed = await _mediator.Send(new DeleteClienteCommand(id)).ConfigureAwait(false);
+            return Ok(committed);
         }
     }
 }
