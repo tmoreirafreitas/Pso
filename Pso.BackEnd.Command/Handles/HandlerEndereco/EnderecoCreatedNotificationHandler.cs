@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Command.Handles.HandlerEndereco
 {
-    public class EnderecoUpdatedNotificationHandler : UpdatedNotificationHandler<Endereco> //INotificationHandler<UpdateEnderecoCommand>
+    public class EnderecoCreatedNotificationHandler : CreatedNotificationHandler<Endereco>
     {
         private readonly IWriteMongoRepository<Cliente> _clienteWriteRepository;
         private readonly IReadMongoRepository<Cliente> _clienteReadRepository;
-      
-        public EnderecoUpdatedNotificationHandler(
+        public EnderecoCreatedNotificationHandler(
             IWriteMongoRepository<Endereco> repository,
             IWriteMongoRepository<Cliente> writeMongoRepository,
             IReadMongoRepository<Cliente> readMongoRepository) : base(repository)
@@ -20,11 +19,11 @@ namespace Pso.BackEnd.Command.Handles.HandlerEndereco
             _clienteReadRepository = readMongoRepository;
         }
 
-        public override async Task Handle(UpdateCommand<Endereco> notification, CancellationToken cancellationToken)
+        public override async Task Handle(CreateCommand<Endereco> notification, CancellationToken cancellationToken)
         {
-            var cliente = await _clienteReadRepository.SingleAsync(c => c.Endereco.Id.Equals(notification.Id));
+            var cliente = await _clienteReadRepository.SingleAsync(c => c.Id.Equals(notification.Item.ClienteId));
             cliente.Endereco = notification.Item;
-            await _clienteWriteRepository.UpdateAsync(cliente);
+            await _clienteWriteRepository.AddAsync(cliente);
             await Task.CompletedTask;
         }
     }

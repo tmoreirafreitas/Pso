@@ -16,7 +16,7 @@ namespace Pso.BackEnd.Command.Handles
             _repository = repository;
         }
 
-        public Task Handle(DeleteCommand<T> notification, CancellationToken cancellationToken)
+        public virtual Task Handle(DeleteCommand<T> notification, CancellationToken cancellationToken)
         {
             _repository.DeleteAsync(notification.Id);
             return Task.CompletedTask;

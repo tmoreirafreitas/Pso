@@ -16,7 +16,7 @@ namespace Pso.BackEnd.Command.Handles
             _repository = repository;
         }
 
-        public Task Handle(CreateCommand<T> notification, CancellationToken cancellationToken)
+        public virtual Task Handle(CreateCommand<T> notification, CancellationToken cancellationToken)
         {
             _repository.AddAsync(notification.Item);
             return Task.FromResult(true);
