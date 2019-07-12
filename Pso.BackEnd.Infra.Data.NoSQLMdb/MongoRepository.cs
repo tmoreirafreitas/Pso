@@ -62,7 +62,15 @@ namespace Pso.BackEnd.Infra.Data.NoSQLMdb
 
         public Task<T> SingleAsync(Expression<Func<T, bool>> expression)
         {
-            var result = _collection.FindAsync(expression).GetAwaiter().GetResult();
+            var filter = Builders<T>.Filter.Where(expression);
+            var result = _collection.FindAsync(filter).GetAwaiter().GetResult().FirstOrDefault();
+            return  Task.FromResult(result);
+        }
+
+        public Task<T> SingleAsync<E>(Expression<Func<T, IEnumerable<E>>> fieldCollection, Expression<Func<E, bool>> expression) where E : Entity
+        {
+            var filter = Builders<T>.Filter.ElemMatch(fieldCollection, expression);
+            var result = _collection.Find(filter);
             return Task.FromResult(result.FirstOrDefault());
         }
 

@@ -1,10 +1,13 @@
-﻿using MongoDB.Bson.Serialization;
+﻿using System;
+using MongoDB.Bson.Serialization;
 using PSO.BackEnd.Domain.Entities;
 
 namespace Pso.BackEnd.Infra.Data.NoSQLMdb.Mapping
 {
     public class ContatoMap : BsonClassMap<Contato>
     {
+        public Type ValueType => throw new NotImplementedException();
+
         public static void Configure()
         {
             RegisterClassMap<Contato>(map =>

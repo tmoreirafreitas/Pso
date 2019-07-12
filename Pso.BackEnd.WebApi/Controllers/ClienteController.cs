@@ -7,7 +7,6 @@ using Pso.BackEnd.WebApi.ViewModel;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Read;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pso.BackEnd.WebApi.Controllers
@@ -30,7 +29,7 @@ namespace Pso.BackEnd.WebApi.Controllers
 
         // GET: api/Cliente
         [HttpGet]
-        [ProducesResponseType(200)]        
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get()
@@ -43,10 +42,10 @@ namespace Pso.BackEnd.WebApi.Controllers
         }
 
         //// GET: api/Cliente/5
-        [ProducesResponseType(200)]        
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
             var cliente = await _clienteReadMongoRepository.GetByIdAsync(id);
@@ -55,10 +54,10 @@ namespace Pso.BackEnd.WebApi.Controllers
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
         }
 
-        [ProducesResponseType(200)]        
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [HttpGet("{cpf}", Name = "GetByCpf")]
+        [HttpGet("cpf/{cpf}")]
         public async Task<IActionResult> GetByCpf(string cpf)
         {
             var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Cpf.Equals(cpf));
@@ -67,26 +66,25 @@ namespace Pso.BackEnd.WebApi.Controllers
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
         }
 
-        [ProducesResponseType(200)]        
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [HttpGet("{phone}", Name = "GetByPhone")]
+        [HttpGet("fone/{phone}")]
         public async Task<IActionResult> GetByPhone(string phone)
         {
-            var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Contatos.FirstOrDefault(t => t.Telefone.Equals(phone)) != null);
+            var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Contatos, ct => ct.Telefone.Equals(phone));
             if (cliente == null)
                 throw new NotFoundException("O CPF informado não existe na base de dados.");
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
         }
 
-        [ProducesResponseType(200)]        
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [HttpGet("{email}", Name = "GetByEmail")]
+        [HttpGet("email/{email}")]
         public async Task<IActionResult> GetByEmail(string email)
         {
-            var cliente = await _clienteReadMongoRepository.SingleAsync(c => 
-            c.Contatos.FirstOrDefault(t => t.Email.ToLower().Equals(email.ToLower())) != null);
+            var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Contatos, ct => ct.Email.Equals(email));
             if (cliente == null)
                 throw new NotFoundException("O CPF informado não existe na base de dados.");
             return Ok(_mapper.Map<ClienteViewModel>(cliente));
@@ -94,7 +92,7 @@ namespace Pso.BackEnd.WebApi.Controllers
 
         // POST: api/Cliente
         [HttpPost]
-        [ProducesResponseType(201)]        
+        [ProducesResponseType(201)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Post([FromBody] ClienteViewModel cliente)
@@ -109,7 +107,7 @@ namespace Pso.BackEnd.WebApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(500)]        
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Put(int id, [FromBody] ClienteViewModel cliente)
         {
             var committed = await _mediator.Send(new UpdateClienteCommand(id, _mapper.Map<Cliente>(cliente))).ConfigureAwait(false);
@@ -117,7 +115,7 @@ namespace Pso.BackEnd.WebApi.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [ProducesResponseType(200)]       
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpDelete("{id}")]
