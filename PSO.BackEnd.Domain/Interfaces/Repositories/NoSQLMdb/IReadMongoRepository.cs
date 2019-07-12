@@ -13,5 +13,6 @@ namespace PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb
         Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> expression);
         Task<TEntity> GetByIdAsync(long id);
         Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> expression);
+        Task<TEntity> SingleAsync<E>(Expression<Func<TEntity, IEnumerable<E>>> fieldCollection, Expression<Func<E, bool>> expression) where E : Entity;
     }
 }
