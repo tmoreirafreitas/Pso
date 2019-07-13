@@ -13,15 +13,5 @@ namespace Pso.BackEnd.Command.Handles.HandlerParcela
         public DeleteParcelaCommandHandler(IParcelaWriteEfRepository repository, IUnitOfWork uow, IMediator mediator) : base(repository, uow, mediator)
         {
         }
-
-        public override Task<bool> Handle(DeleteCommand<Parcela> request, CancellationToken cancellationToken)
-        {
-            var commited = DeleteCommandItem(request);
-            if (commited)
-            {
-                _mediator.Publish(request);
-            }
-            return Task.FromResult(commited);
-        }
     }
 }

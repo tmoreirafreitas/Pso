@@ -13,15 +13,5 @@ namespace Pso.BackEnd.Command.Handles.HandlerParcela
         public CreateParcelaCommandHandler(IParcelaWriteEfRepository repository, IUnitOfWork uow, IMediator mediator) : base(repository, uow, mediator)
         {
         }
-
-        public override async Task<bool> Handle(CreateCommand<Parcela> request, CancellationToken cancellationToken)
-        {
-            var commited = CreateCommandItem(request);
-            if (commited)
-            {
-                await _mediator.Publish(request);
-            }
-            return commited;
-        }
     }
 }
