@@ -102,9 +102,9 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddTransient<INotificationHandler<DeleteContatoCommand>, DeletedNotificationHandler<Contato>>();
             services.AddTransient<INotificationHandler<UpdateContatoCommand>, UpdatedNotificationHandler<Contato>>();
 
-            services.AddTransient<INotificationHandler<CreateFaturaCommand>, CreatedNotificationHandler<Fatura>>();
-            services.AddTransient<INotificationHandler<DeleteFaturaCommand>, DeletedNotificationHandler<Fatura>>();
-            services.AddTransient<INotificationHandler<UpdateFaturaCommand>, UpdatedNotificationHandler<Fatura>>();
+            services.AddTransient<INotificationHandler<CreateFaturaCommand>, FaturaCreatedNotificationHandler>();
+            services.AddTransient<INotificationHandler<DeleteFaturaCommand>, FaturaDeletedNotificationHandler>();
+            services.AddTransient<INotificationHandler<UpdateFaturaCommand>, FaturaUpdatedNotificationHandler>();
 
             services.AddTransient<INotificationHandler<CreateLenteCommand>, CreatedNotificationHandler<Lente>>();
             services.AddTransient<INotificationHandler<DeleteLenteCommand>, DeletedNotificationHandler<Lente>>();
