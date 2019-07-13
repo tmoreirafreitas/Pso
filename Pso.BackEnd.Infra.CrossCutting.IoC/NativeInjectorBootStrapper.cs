@@ -98,9 +98,9 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddTransient<INotificationHandler<DeleteEnderecoCommand>, EnderecoDeletedNotificationHandler>();
             services.AddTransient<INotificationHandler<UpdateEnderecoCommand>, EnderecoUpdatedNotificationHandler>();
 
-            services.AddTransient<INotificationHandler<CreateContatoCommand>, CreatedNotificationHandler<Contato>>();
-            services.AddTransient<INotificationHandler<DeleteContatoCommand>, DeletedNotificationHandler<Contato>>();
-            services.AddTransient<INotificationHandler<UpdateContatoCommand>, UpdatedNotificationHandler<Contato>>();
+            services.AddTransient<INotificationHandler<CreateContatoCommand>, ContatoCreatedNotificationHandler>();
+            services.AddTransient<INotificationHandler<DeleteContatoCommand>, ContatoDeletedNotificationHandler>();
+            services.AddTransient<INotificationHandler<UpdateContatoCommand>, ContatoUpdatedNotificationHandler>();
 
             services.AddTransient<INotificationHandler<CreateFaturaCommand>, FaturaCreatedNotificationHandler>();
             services.AddTransient<INotificationHandler<DeleteFaturaCommand>, FaturaDeletedNotificationHandler>();
@@ -114,9 +114,9 @@ namespace Pso.BackEnd.Infra.CrossCutting.IoC
             services.AddTransient<INotificationHandler<DeleteOculosCommand>, DeletedNotificationHandler<Oculos>>();
             services.AddTransient<INotificationHandler<UpdateOculosCommand>, UpdatedNotificationHandler<Oculos>>();
 
-            services.AddTransient<INotificationHandler<CreateParcelaCommand>, CreatedNotificationHandler<Parcela>>();
-            services.AddTransient<INotificationHandler<DeleteParcelaCommand>, DeletedNotificationHandler<Parcela>>();
-            services.AddTransient<INotificationHandler<UpdateParcelaCommand>, UpdatedNotificationHandler<Parcela>>();
+            services.AddTransient<INotificationHandler<CreateParcelaCommand>, ParcelaCreatedNotificationHandler>();
+            services.AddTransient<INotificationHandler<DeleteParcelaCommand>, ParcelaDeletedNotificationHandler>();
+            services.AddTransient<INotificationHandler<UpdateParcelaCommand>, ParcelaUpdatedNotificationHandler>();
 
             services.AddTransient<INotificationHandler<CreatePedidoCommand>, CreatedNotificationHandler<Pedido>>();
             services.AddTransient<INotificationHandler<DeletePedidoCommand>, DeletedNotificationHandler<Pedido>>();
