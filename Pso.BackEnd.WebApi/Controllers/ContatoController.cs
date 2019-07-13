@@ -75,13 +75,15 @@ namespace Pso.BackEnd.WebApi.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{contatoId}/cliente/{clienteId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(long contatoId, long clienteId)
         {
-            var committed = await _mediator.Send(new DeleteContatoCommand(id)).ConfigureAwait(false);
+            var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Id.Equals(clienteId));
+            var contato = cliente.Contatos.FirstOrDefault(c => c.Id.Equals(contatoId));
+            var committed = await _mediator.Send(new DeleteContatoCommand(contatoId, contato)).ConfigureAwait(false);
             return Ok(committed);
         }
     }

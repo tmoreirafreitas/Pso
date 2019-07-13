@@ -21,7 +21,7 @@ namespace Pso.BackEnd.Command.Handles.HandlerContato
 
         public override async Task Handle(UpdateCommand<Contato> notification, CancellationToken cancellationToken)
         {
-            var cliente = await _clienteReadRepository.SingleAsync(c => c.Contatos.SingleOrDefault(ct => ct.ClienteId.Equals(notification.Item.Id)) != null);
+            var cliente = await _clienteReadRepository.SingleAsync(c => c.Id.Equals(notification.Item.ClienteId));
             var contatoRemove = cliente.Contatos.SingleOrDefault(c => c.Id.Equals(notification.Item.Id) && c.ClienteId.Equals(notification.Item.ClienteId));
             cliente.Contatos.Remove(contatoRemove);
             cliente.Contatos.Add(notification.Item);

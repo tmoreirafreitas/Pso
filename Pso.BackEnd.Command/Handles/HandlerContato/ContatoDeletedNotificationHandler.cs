@@ -21,10 +21,16 @@ namespace Pso.BackEnd.Command.Handles.HandlerContato
 
         public override async Task Handle(DeleteCommand<Contato> notification, CancellationToken cancellationToken)
         {
-            var cliente = await _clienteReadRepository.SingleAsync(c => c.Contatos.SingleOrDefault(ct => ct.ClienteId.Equals(notification.Item.Id)) != null);
-            var contatoRemove = cliente.Contatos.SingleOrDefault(c => c.Id.Equals(notification.Item.Id) && c.ClienteId.Equals(notification.Item.ClienteId));
-            cliente.Contatos.Remove(contatoRemove);
-            await _clienteWriteRepository.UpdateAsync(cliente);
+            var cliente = await _clienteReadRepository.SingleAsync(c => c.Id.Equals(notification.Item.ClienteId));
+            if (cliente != null)
+            {
+                var contatoRemove = cliente.Contatos.SingleOrDefault(c => c.Id.Equals(notification.Item.Id) && c.ClienteId.Equals(notification.Item.ClienteId));
+                if(contatoRemove != null)
+                {
+                    cliente.Contatos.Remove(contatoRemove);
+                    await _clienteWriteRepository.UpdateAsync(cliente);
+                }
+            }
             await Task.CompletedTask;
         }
     }
