@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Pso.BackEnd.Command.Request.Generic;
-using Pso.BackEnd.Command.Request.RequestEndereco;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
 using PSO.BackEnd.Domain.Interfaces.Repositories.UnitOfWork;

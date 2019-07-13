@@ -3,9 +3,6 @@ using Pso.BackEnd.Command.Request.Generic;
 using PSO.BackEnd.Domain.Entities;
 using PSO.BackEnd.Domain.Interfaces.Repositories.Ef.Write;
 using PSO.BackEnd.Domain.Interfaces.Repositories.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

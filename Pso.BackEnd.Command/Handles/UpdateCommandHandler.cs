@@ -23,19 +23,18 @@ namespace Pso.BackEnd.Command.Handles
 
         public virtual Task<bool> Handle(UpdateCommand<T> request, CancellationToken cancellationToken)
         {
-            var committed = UpdateCommandItem(request).ConfigureAwait(false).GetAwaiter().GetResult();
-            if (committed)
+            var committed = UpdateCommandItem(request);
                 _mediator.Publish(request);
             return Task.FromResult(committed);
         }
 
-        protected Task<bool> UpdateCommandItem(UpdateCommand<T> updateCommand)
+        protected bool UpdateCommandItem(UpdateCommand<T> updateCommand)
         {
             try
             {
                 _repository.Update(updateCommand.Item);
                 var committed = _uow.Commit();
-                return Task.FromResult(committed);
+                return committed;
             }
             catch (Exception ex)
             {

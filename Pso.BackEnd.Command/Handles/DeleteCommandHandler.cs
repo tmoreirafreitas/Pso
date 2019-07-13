@@ -22,7 +22,7 @@ namespace Pso.BackEnd.Command.Handles
             _mediator = mediator;
         }
 
-        public Task<bool> Handle(DeleteCommand<T> request, CancellationToken cancellationToken)
+        public virtual Task<bool> Handle(DeleteCommand<T> request, CancellationToken cancellationToken)
         {
             var committed = DeleteCommandItem(request);
             if (committed)

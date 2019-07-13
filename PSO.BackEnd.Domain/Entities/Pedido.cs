@@ -15,7 +15,6 @@ namespace PSO.BackEnd.Domain.Entities
         public long FaturaId { get; private set; }
         public Cliente Cliente { get; set; }
         public Fatura Fatura { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
         public ICollection<PedidoOculos> PedidosOculos { get; private set; }        
         public decimal Preco { get; private set; }
 
