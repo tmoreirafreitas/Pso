@@ -1,13 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Pso.BackEnd.Command.Request.RequestContato;
+using Pso.BackEnd.WebApi.ViewModel;
+using PSO.BackEnd.Domain.Entities;
+using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Read;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Pso.BackEnd.WebApi.ViewModel;
-using PSO.BackEnd.Domain.Interfaces.Repositories.NoSQLMdb.Read;
 
 namespace Pso.BackEnd.WebApi.Controllers
 {
@@ -52,20 +52,37 @@ namespace Pso.BackEnd.WebApi.Controllers
 
         // POST: api/Contato
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Post([FromBody] ContatoViewModel contato)
         {
+            var obj = _mapper.Map<Contato>(contato);
+            var committed = await _mediator.Send(new CreateContatoCommand(obj));
+            return Ok(committed);
         }
 
         // PUT: api/Contato/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Put([FromBody] ContatoViewModel contato)
         {
+            var committed = await _mediator.Send(new UpdateContatoCommand(contato.Id, _mapper.Map<Contato>(contato))).ConfigureAwait(false);
+            return Ok(committed);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var committed = await _mediator.Send(new DeleteContatoCommand(id)).ConfigureAwait(false);
+            return Ok(committed);
         }
     }
 }

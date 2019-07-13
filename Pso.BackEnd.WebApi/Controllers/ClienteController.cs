@@ -103,14 +103,14 @@ namespace Pso.BackEnd.WebApi.Controllers
         }
 
         // PUT: api/Cliente/5
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Put(int id, [FromBody] ClienteViewModel cliente)
+        public async Task<IActionResult> Put([FromBody] ClienteViewModel cliente)
         {
-            var committed = await _mediator.Send(new UpdateClienteCommand(id, _mapper.Map<Cliente>(cliente))).ConfigureAwait(false);
+            var committed = await _mediator.Send(new UpdateClienteCommand(cliente.Id, _mapper.Map<Cliente>(cliente))).ConfigureAwait(false);
             return Ok(committed);
         }
 

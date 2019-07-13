@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Command.Handles.HandlerEndereco
 {
-    public class EnderecoUpdatedNotificationHandler : UpdatedNotificationHandler<Endereco> //INotificationHandler<UpdateEnderecoCommand>
+    public class EnderecoUpdatedNotificationHandler : UpdatedNotificationHandler<Endereco>
     {
         private readonly IWriteMongoRepository<Cliente> _clienteWriteRepository;
         private readonly IReadMongoRepository<Cliente> _clienteReadRepository;
