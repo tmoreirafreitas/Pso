@@ -13,15 +13,5 @@ namespace Pso.BackEnd.Command.Handles.HandlerEndereco
         public CreateEnderecoCommandHandler(IEnderecoWriteEfRepository repository, IUnitOfWork uow, IMediator mediator) : base(repository, uow, mediator)
         {
         }
-
-        public override async Task<bool> Handle(CreateCommand<Endereco> request, CancellationToken cancellationToken)
-        {
-            var committed = CreateCommandItem(request);
-            if (committed)
-            {
-                await _mediator.Publish(request);
-            }
-            return committed;
-        }
     }
 }

@@ -5,6 +5,9 @@ namespace Pso.BackEnd.Command.Request.RequestContato
 {
     public class DeleteContatoCommand : DeleteCommand<Contato>
     {
+        public DeleteContatoCommand(long id) : base(id)
+        {
+        }
         public DeleteContatoCommand(long id, Contato item) : base(id, item)
         {
         }
