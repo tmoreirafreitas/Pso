@@ -8,4 +8,8 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PSO.BackEnd.Domain\PSO.BackEnd.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

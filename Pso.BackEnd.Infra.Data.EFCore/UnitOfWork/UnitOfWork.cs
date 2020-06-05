@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PSO.BackEnd.Domain.Interfaces.Repositories.UnitOfWork;
 using System;
+using System.Threading.Tasks;
 
 namespace Pso.BackEnd.Infra.Data.EFCore.UnitOfWork
 {
@@ -14,6 +15,11 @@ namespace Pso.BackEnd.Infra.Data.EFCore.UnitOfWork
         public bool Commit()
         {
             return _context.SaveChanges() > 0;
+        }
+
+        public async Task<bool> CommitAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
 
         private bool disposedValue = false;

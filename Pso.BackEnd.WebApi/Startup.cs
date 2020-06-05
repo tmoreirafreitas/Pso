@@ -70,7 +70,6 @@ namespace Pso.BackEnd.WebApi
             //Configure MongoDb
             MongoDbPersistence.Configure();
 
-            //services.AddMediatR(typeof(NativeInjectorBootStrapper).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             services.AddResponseCompression(options =>
@@ -91,6 +90,7 @@ namespace Pso.BackEnd.WebApi
             services.AddMvc(options =>
             {
                 options.Filters.Add<NotificationFilter>();
+                options.Filters.Add<UnitOfWorkFilter>();
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);           
