@@ -7,7 +7,7 @@ using Pso.BackEnd.Infra.Data.NoSQLMdb.Mapping;
 
 namespace Pso.BackEnd.Infra.CrossCutting.IoC
 {
-    public sealed class DbInstaller : IInstaller
+    public class DbInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

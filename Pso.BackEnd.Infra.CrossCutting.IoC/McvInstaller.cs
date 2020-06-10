@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace Pso.BackEnd.Infra.CrossCutting.IoC
 {
-    public sealed class McvInstaller : IInstaller
+    public class McvInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

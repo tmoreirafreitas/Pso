@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Pso.BackEnd.Infra.CrossCutting.IoC
 {
-    public sealed class MediatRInstaller : InstallerBase, IInstaller
+    public class MediatRInstaller : InstallerBase, IInstaller
     {
         public MediatRInstaller()
         {

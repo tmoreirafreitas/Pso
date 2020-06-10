@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace Pso.BackEnd.Infra.CrossCutting.IoC
 {
-    public sealed class RepositoryAndServiceInstaller : InstallerBase, IInstaller
+    public class RepositoryAndServiceInstaller : InstallerBase, IInstaller
     {
         public RepositoryAndServiceInstaller()
         {
