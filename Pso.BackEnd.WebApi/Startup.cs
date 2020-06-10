@@ -1,24 +1,15 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Pso.BackEnd.Infra.CrossCutting.IoC;
+using Pso.BackEnd.Infra.CrossCutting.IoC.Extensions;
 using Pso.BackEnd.Infra.CrossCutting.NotificationsAndFilters;
-using Pso.BackEnd.Infra.Data.EFCore.Context;
-using Pso.BackEnd.Infra.Data.NoSQLMdb;
-using Pso.BackEnd.Infra.Data.NoSQLMdb.Mapping;
 using Pso.BackEnd.WebApi.AutoMapper;
-using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
-using System.Reflection;
 
 namespace Pso.BackEnd.WebApi
 {
@@ -49,51 +40,14 @@ namespace Pso.BackEnd.WebApi
 
             // Registering Mappings automatically only works if the 
             // Automapper Profile classes are in ASP.NET project
-            AutoMapperConfig.RegisterMappings();           
-
-            // Config Entity Framework
-            string migrationsAssembly = "Pso.BackEnd.Infra.Data.EFCore";
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<PsoDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(migrationsAssembly)));
-
-            services.Configure<PsoDbMongoDatabaseSettings>(options =>
-            {
-                options.ConnectionString
-                    = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.DatabaseName
-                    = Configuration.GetSection("MongoConnection:MongoDatabase").Value;
-                options.IsSSL = Convert.ToBoolean(Configuration.GetSection("MongoConnection:IsSSL").Value);
-            });
-
-            //Configure MongoDb
-            MongoDbPersistence.Configure();
-
-            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings();
 
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
-            });            
-
-            // .NET Native DI Abstraction
-            // Adding dependencies from another layers (isolated from Presentation)
-            NativeInjectorBootStrapper.RegisterServices(services);
-
-            // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Portal de Serviço de Ótica Api", Version = "v1" });
             });
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add<NotificationFilter>();
-                options.Filters.Add<UnitOfWorkFilter>();
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);           
+            services.InstallServicesInAssembly(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
