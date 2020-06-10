@@ -13,13 +13,13 @@ namespace Pso.BackEnd.Infra.Data.EFCore.Context
         public PsoDbContext()
         {
             // Create the database
-            Database.Migrate();
+            //Database.Migrate();
         }
 
         public PsoDbContext(DbContextOptions<PsoDbContext> options) : base(options)
         {
             // Create the database
-            Database.Migrate();
+            //Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
