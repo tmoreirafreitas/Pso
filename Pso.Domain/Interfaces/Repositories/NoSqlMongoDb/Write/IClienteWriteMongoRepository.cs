@@ -1,0 +1,8 @@
+﻿using Pso.Domain.Entities;
+
+namespace Pso.Domain.Interfaces.Repositories.NoSqlMongoDb.Write
+{
+    public interface IClienteWriteMongoRepository : IWriteMongoRepository<Cliente>
+    {
+    }
+}

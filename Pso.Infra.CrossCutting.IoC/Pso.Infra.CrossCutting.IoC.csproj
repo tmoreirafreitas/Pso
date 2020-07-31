@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pso.Domain.Core\Pso.Domain.Core.csproj" />
+    <ProjectReference Include="..\Pso.Domain\Pso.Domain.csproj" />
+    <ProjectReference Include="..\Pso.Infra.CrossCutting.Filters\Pso.Infra.CrossCutting.Filters.csproj" />
+    <ProjectReference Include="..\Pso.Infra.Data.EfCore\Pso.Infra.Data.EfCore.csproj" />
+    <ProjectReference Include="..\Pso.Infra.Data.NoSqlMongoDb\Pso.Infra.Data.NoSqlMongoDb.csproj" />
+  </ItemGroup>
+
+</Project>
