@@ -9,7 +9,7 @@ A estrutura do sistema foi baseada em CQRS.
 </dl>
 
 Algumas das tecnologias utilizadas:
-* .NET CORE 2.2
+* .NET CORE 3.1
 * WebAPI
 * MediatR
 * PostgreSQL
