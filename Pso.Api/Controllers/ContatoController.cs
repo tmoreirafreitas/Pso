@@ -8,6 +8,7 @@ using Pso.Domain.Core.Contato.Commands.Deletar;
 using Pso.Domain.Interfaces.Repositories.NoSqlMongoDb.Read;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pso.Api.Controllers
@@ -71,13 +72,17 @@ namespace Pso.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{contatoId}/cliente/{clienteId}")]
+        [HttpDelete("fone/{phone}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Delete(long contatoId, long clienteId)
+        public async Task<IActionResult> Delete(string phone, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeletarContatoCommand(contatoId, clienteId)).ConfigureAwait(false);
+            var cliente = await _clienteReadMongoRepository.SingleAsync(c => c.Contatos, ct => ct.Telefone.Equals(phone), cancellationToken)
+                .ConfigureAwait(false);
+            var contato = cliente?.Contatos.SingleOrDefault(c => c.Telefone == phone);
+            if (contato == null) return NotFound();
+            await _mediator.Send(new DeletarContatoCommand(contato.Id, contato.ClienteId), cancellationToken).ConfigureAwait(false);
             return Ok();
         }
     }

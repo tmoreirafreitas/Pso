@@ -40,7 +40,6 @@ namespace Pso.Domain.Core.Oculos.Commands.Cadastrar
             ALT = aLT;
             PedidosOculos = new List<CadastrarPedidoOculosCommand>();
             Lentes = new List<CadastrarLenteCommand>(2);
-            Validate(this, new CadastrarOculosCommandValidator());
         }
     }
 }

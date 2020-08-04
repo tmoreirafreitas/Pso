@@ -20,59 +20,59 @@ namespace Pso.Infra.Data.NoSqlMongoDb.Repositories
             Collection = dataContext.MongoDatabase.GetCollection<T>(typeof(T).Name);
         }
 
-        public Task AddAsync(T obj, CancellationToken cancellationToken = default(CancellationToken))
+        public Task AddAsync(T obj, CancellationToken cancellationToken = default)
         {
             Collection.InsertOneAsync(obj, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
         {
             Collection.DeleteOneAsync(expression, cancellationToken).ConfigureAwait(false);
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(T obj, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteAsync(T obj, CancellationToken cancellationToken = default)
         {
             Collection.DeleteOneAsync(t => t.Id.Equals(obj.Id), cancellationToken).ConfigureAwait(false);
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteAsync(long id, CancellationToken cancellationToken = default)
         {
             Collection.DeleteOneAsync(t => t.Id.Equals(id), cancellationToken).ConfigureAwait(false);
             return Task.CompletedTask;
         }
 
-        public async Task<ICollection<T>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ICollection<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var filter = Builders<T>.Filter.Empty;
             var items = await Collection.Find(filter).ToListAsync(cancellationToken).ConfigureAwait(false);
             return items;
         }
 
-        public async Task<ICollection<T>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ICollection<T>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken = default)
         {
             var filter = Builders<T>.Filter.Empty;
             var items = await Collection.Find(filter).ToListAsync(cancellationToken).ConfigureAwait(false);
             return items.Skip(page).Take(pageSize).ToList();
         }
 
-        public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
         {
             var filter = Builders<T>.Filter.Where(expression);
             var items = await Collection.Find(filter).ToListAsync(cancellationToken).ConfigureAwait(false);
             return items;
         }
 
-        public async Task<T> GetByIdAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> GetByIdAsync(long id, CancellationToken cancellationToken = default)
         {
             var filter = Builders<T>.Filter.Where(t => t.Id.Equals(id));
             var item = await Collection.FindAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
             return item.FirstOrDefault();
         }
 
-        public async Task<T> SingleAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> SingleAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
         {
             var filter = Builders<T>.Filter.Where(expression);
             var item = await Collection.FindAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -80,7 +80,7 @@ namespace Pso.Infra.Data.NoSqlMongoDb.Repositories
         }
 
         public async Task<T> SingleAsync<TE>(Expression<Func<T, IEnumerable<TE>>> fieldCollection, Expression<Func<TE, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken)) where TE : Entity
+            CancellationToken cancellationToken = default) where TE : Entity
         {
             var filter = Builders<T>.Filter.ElemMatch(fieldCollection, expression);
             var item = await Collection.FindAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);

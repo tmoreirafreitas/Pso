@@ -32,7 +32,6 @@ namespace Pso.Domain.Core.Pedido.Commands.Cadastrar
             FaturaId = faturaId;
             PedidosOculos = new List<CadastrarPedidoOculosCommand>();
             Preco = preco;
-            Validate(this, new CadastrarPedidoCommandValidator());
         }
     }
 }

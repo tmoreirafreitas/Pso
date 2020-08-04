@@ -21,7 +21,6 @@ namespace Pso.Domain.Core.Parcela.Commands.Cadastrar
             DataPagamento = dataPagamento;
             Recebido = recebido;
             FaturaId = faturaId;
-            Validate(this, new CadastrarParcelaCommandValidator());
         }
     }
 }

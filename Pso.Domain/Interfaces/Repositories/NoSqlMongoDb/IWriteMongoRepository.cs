@@ -10,10 +10,9 @@ namespace Pso.Domain.Interfaces.Repositories.NoSqlMongoDb
     {
         Task UpdateAsync(TEntity obj);
         Task UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity obj);
-        Task AddAsync(TEntity obj, CancellationToken cancellationToken = default(CancellationToken));
-        Task DeleteAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default(CancellationToken));
-        Task DeleteAsync(TEntity obj, CancellationToken cancellationToken = default(CancellationToken));
-        Task DeleteAsync(long id, CancellationToken cancellationToken = default(CancellationToken));
-
+        Task AddAsync(TEntity obj, CancellationToken cancellationToken = default);
+        Task DeleteAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+        Task DeleteAsync(TEntity obj, CancellationToken cancellationToken = default);
+        Task DeleteAsync(long id, CancellationToken cancellationToken = default);
     }
 }

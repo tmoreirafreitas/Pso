@@ -5,39 +5,38 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Pso.Infra.CrossCutting.Filters;
 
 namespace Pso.Domain.Core.Pipelines
 {
-    public class FailFastValidateCommand<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
-        where TRequest : ICommand<TResponse> where TResponse : ResultCommand
+    public class FailFastValidateCommand<TRequest, Unit> : IPipelineBehavior<TRequest, Unit>
     {
         private readonly IEnumerable<IValidator> _validators;
+        private readonly NotificationContext _notificationContext;
 
-        public FailFastValidateCommand(IEnumerable<IValidator> validators)
+        public FailFastValidateCommand(IEnumerable<IValidator> validators, NotificationContext context)
         {
             _validators = validators;
+            _notificationContext = context;
         }
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+       
+        public Task<Unit> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Unit> next)
         {
             var failures = _validators
                 .Select(v => v.Validate(request))
-                .SelectMany(result => result.Errors)
+                .SelectMany(x => x.Errors)
                 .Where(f => f != null)
                 .ToList();
 
-            return failures.Any()
-                ? Errors(failures)
-                : next();
+            return failures.Any() ? Notify(failures) : next();
         }
 
-        private static Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
+        private Task<Unit> Notify(IEnumerable<ValidationFailure> failures)
         {
-            var response = new ResultCommand();
-            foreach (var failure in failures)
-            {
-                response.ValidationResult.Errors.Add(failure);
-            }
-            return Task.FromResult(response as TResponse);
+            var result = default(Unit);
+            var validationResult = new ValidationResult(failures);
+            _notificationContext.AddNotifications(validationResult);
+            return Task.FromResult(result);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Pso.Domain.Core.Lente.Commands.Cadastrar
             Eixo = eixo;
             LenteType = lenteType;
             OculosId = oculosId;
-            Validate(this, new CadastrarLenteCommandValidator());
         }
     }
 }

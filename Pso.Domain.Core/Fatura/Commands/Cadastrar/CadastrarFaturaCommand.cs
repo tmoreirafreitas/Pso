@@ -32,7 +32,6 @@ namespace Pso.Domain.Core.Fatura.Commands.Cadastrar
             FormaPagamento = formaPagamento;
             Parcelas = new List<CadastrarParcelaCommand>();
             PedidoId = pedidoId;
-            Validate(this, new CadastrarFaturaCommandValidator());
         }
     }
 }

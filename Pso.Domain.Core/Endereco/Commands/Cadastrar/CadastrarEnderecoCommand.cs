@@ -23,7 +23,6 @@ namespace Pso.Domain.Core.Endereco.Commands.Cadastrar
             Numero = numero;
             Complemento = complemento;
             Cep = cep;
-            Validate(this, new CadastrarEnderecoCommandValidator());
         }
     }
 }

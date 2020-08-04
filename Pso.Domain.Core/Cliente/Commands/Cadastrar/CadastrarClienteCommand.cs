@@ -1,7 +1,6 @@
 ﻿using Pso.Domain.Core.Contato.Commands.Cadastrar;
 using Pso.Domain.Core.Endereco.Commands.Cadastrar;
 using Pso.Domain.Core.Pedido.Commands.Cadastrar;
-using Pso.Domain.Core.Validators;
 using Pso.Domain.Enum;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,6 @@ namespace Pso.Domain.Core.Cliente.Commands.Cadastrar
             Contatos = new List<CadastrarContatoCommand>();
             Pedidos = new List<CadastrarPedidoCommand>();
             Sexo = sexo;
-            Validate(this, new CadastrarClienteCommandValidator());
         }
     }
 }
